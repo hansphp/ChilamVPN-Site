@@ -37,6 +37,7 @@ class IpToolController extends Controller
             'version' => $this->translatedVersion($ipVersionRaw),
             'location' => $this->formatLocation($geo),
             'isp' => $this->formatAsn($geo),
+            'country_code' => strtoupper((string) Arr::get($geo, 'country_iso_code')),
             'updated_at' => now()->toIso8601String(),
         ];
 

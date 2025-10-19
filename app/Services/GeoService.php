@@ -68,6 +68,7 @@ class GeoService
 
             return [
                 'country' => $city->country->name,
+                'country_iso_code' => $city->country->isoCode,
                 'region' => optional($city->subdivisions[0] ?? null)->name,
                 'city' => $city->city?->name,
                 'lat' => $city->location?->latitude,
@@ -117,6 +118,7 @@ class GeoService
 
         return [
             'country' => Arr::get($payload, 'country'),
+            'country_iso_code' => Arr::get($payload, 'country_iso_code'),
             'region' => Arr::get($payload, 'region'),
             'city' => Arr::get($payload, 'city'),
             'lat' => Arr::get($payload, 'lat'),
@@ -197,6 +199,7 @@ class GeoService
         return array_merge([
             'ip' => $ip,
             'country' => null,
+            'country_iso_code' => null,
             'region' => null,
             'city' => null,
             'lat' => null,

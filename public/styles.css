@@ -307,6 +307,15 @@ a:hover {
   font-family: 'SFMono-Regular', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
+.ip-flag {
+  width: 22px;
+  height: 16px;
+  object-fit: cover;
+  margin-right: 0.4rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(12, 18, 34, 0.08);
+}
+
 .ip-insights__actions {
   margin-top: 2rem;
   display: flex;

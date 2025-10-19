@@ -76,7 +76,12 @@
           </article>
           <article class="ip-card">
             <h3>{{ __('ip.location') }}</h3>
-            <p>{{ $ipDetails['location'] }}</p>
+            <p>
+              @if(!empty($ipDetails['country_code']))
+                <img class="ip-flag" src="{{ asset('pics/' . strtolower($ipDetails['country_code']) . '.png') }}" alt="{{ $ipDetails['country_code'] }} flag" />
+              @endif
+              {{ $ipDetails['location'] }}
+            </p>
           </article>
           <article class="ip-card">
             <h3>{{ __('ip.isp') }}</h3>

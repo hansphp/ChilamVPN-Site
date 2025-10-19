@@ -56,6 +56,7 @@ class GeoController extends Controller
             ->json(array_merge([
                 'ip' => $ip,
                 'country' => null,
+                'country_iso_code' => null,
                 'region' => null,
                 'city' => null,
                 'lat' => null,
