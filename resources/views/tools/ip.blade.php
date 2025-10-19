@@ -159,6 +159,14 @@
       <div class="footer__grid">
         <div class="footer__info">
           <p>{{ data_get($content, 'footer.notice') }}</p>
+          @if($email = data_get($content, 'footer.contact.email'))
+            <p>
+              @if($label = data_get($content, 'footer.contact.label'))
+                {{ $label }}
+              @endif
+              <a href="mailto:{{ $email }}">{{ $email }}</a>
+            </p>
+          @endif
           <p>
             @foreach(data_get($content, 'footer.links', []) as $link)
               <a href="{{ $link['href'] ?? '#' }}">{{ $link['label'] ?? '' }}</a>@if(! $loop->last) • @endif

@@ -65,6 +65,10 @@
   },
   "footer": {
     "notice": "© 2025 ChilamVPN. Todos los derechos reservados.",
+    "contact": {
+      "label": "Escríbenos:",
+      "email": "contacto@chilamvpn.com"
+    },
     "links": [
       { "label": "Términos de uso", "href": "#" },
       { "label": "Política de privacidad", "href": "#" }
