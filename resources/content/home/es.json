@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "ChilamVPN – Plataforma VPN cloud de autoservicio",
+    "description": "Conecta tus sistemas y unidades de negocio de forma segura con nuestra plataforma VPN cloud de autoservicio."
+  },
+  "nav": {
+    "tools": "Herramientas",
+    "tools_items": [
+      { "label": "¿Cuál es mi IP pública?", "target": "ip-tool" }
+    ],
+    "login": "Iniciar sesión",
+    "login_href": "https://portal.chilamvpn.com/?lang=es",
+    "cta": "Comienza ahora",
+    "cta_href": "#benefits"
+  },
+  "hero": {
+    "brand": "ChilamVPN",
+    "tagline": "Conecta tus sistemas y unidades de negocio con una VPN cloud fácil de administrar.",
+    "cta": "Comienza ahora",
+    "cta_href": "#benefits"
+  },
+  "sections": {
+    "benefits": {
+      "title": "Ventajas",
+      "items": [
+        {
+          "title": "Autoservicio sencillo",
+          "body": "Registra usuarios y dispositivos en minutos desde una interfaz intuitiva. Descarga configuraciones listas para usar sin depender de soporte."
+        },
+        {
+          "title": "Seguridad robusta",
+          "body": "Tecnología VPN de última generación con cifrado moderno y rendimiento optimizado para garantizar comunicaciones seguras."
+        },
+        {
+          "title": "Sin hardware adicional",
+          "body": "Conéctate a tus sistemas sin firewalls físicos ni IP públicas. Todo se despliega automáticamente en la nube."
+        },
+        {
+          "title": "Escalable y flexible",
+          "body": "Añade usuarios y dispositivos, expande la red a nuevas regiones y gestiona permisos desde un panel centralizado."
+        }
+      ]
+    },
+    "how": {
+      "title": "¿Cómo funciona?",
+      "steps": [
+        {
+          "title": "Solicita tu cuenta",
+          "body": "Accede de forma segura a tu panel personal y obtén claves únicas para tus conexiones."
+        },
+        {
+          "title": "Descarga la configuración",
+          "body": "Genera tu archivo VPN y código QR para instalarlo rápidamente en tus dispositivos."
+        },
+        {
+          "title": "Conecta tus equipos",
+          "body": "Activa la conexión y empieza a comunicar sedes y servicios a través de nuestra red protegida."
+        }
+      ]
+    },
+    "legal": {
+      "title": "Uso responsable",
+      "body": "ChilamVPN está enfocada en conectar sedes y sistemas corporativos de forma segura. No ofrecemos navegación anónima ni elusión de bloqueos geográficos; priorizamos la conectividad fiable y el cumplimiento."
+    }
+  },
+  "footer": {
+    "notice": "© 2025 ChilamVPN. Todos los derechos reservados.",
+    "links": [
+      { "label": "Términos de uso", "href": "#" },
+      { "label": "Política de privacidad", "href": "#" }
+    ]
+  },
+  "ui": {
+    "language_switcher_title": "¿Quieres cambiar de idioma?",
+    "language_switcher_hint": "Selecciona un idioma para ver esta página.",
+    "copy_cta": "Copiar IP"
+  }
+}

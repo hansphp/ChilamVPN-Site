@@ -15,7 +15,7 @@ class HomeController extends Controller
 
     public function landing(): RedirectResponse
     {
-        $defaultLocale = config('locales.default', 'es-MX');
+        $defaultLocale = config('locales.default', 'es-LA');
         $slug = $this->homeSlug($defaultLocale);
 
         $path = $slug ? sprintf('%s/%s', $defaultLocale, $slug) : $defaultLocale;

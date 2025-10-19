@@ -136,12 +136,13 @@ Validación:
   - Cabeceras: `Cache-Control` similar a `show`, `X-Robots-Tag: noindex`.
 
 ## 8. Internacionalización (i18n)
-- Configuración: `config/app.php` agrega `'supported_locales' => ['es-MX', 'en', 'pt-BR', 'fr-FR']`.
+- Configuración: `config/app.php` agrega `'supported_locales' => ['es', 'es-LA', 'en', 'pt-BR', 'fr-FR']`.
 - Archivos de idioma:
-  - `resources/lang/en/home.php`
-  - `resources/lang/es-MX/home.php`
-  - `resources/lang/pt-BR/home.php`
-  - `resources/lang/fr-FR/home.php`
+  - `resources/lang/en/ip.php`
+  - `resources/lang/es/ip.php`
+  - `resources/lang/es-LA/ip.php`
+  - `resources/lang/pt-BR/ip.php`
+  - `resources/lang/fr-FR/ip.php`
 - Claves mínimas:
   - `title`, `desc`, `your_ip`, `ip_type`, `ipv4`, `ipv6`, `location`, `isp`, `copy`, `copied`, `updated`, `educational_text`.
   - Otros textos del diseño (CTA, encabezados, descripciones).
@@ -149,7 +150,8 @@ Validación:
   ```php
   return [
       'slugs' => [
-          'es-MX' => 'cual-es-mi-ip',
+          'es'    => 'cual-es-mi-ip',
+          'es-LA' => 'cual-es-mi-ip',
           'en'    => 'what-is-my-ip',
           'pt-BR' => 'qual-e-meu-ip',
           'fr-FR' => 'quelle-est-mon-ip',
@@ -254,7 +256,7 @@ GEO_API_TOKEN=
 
 ## 16. Pruebas (aceptación)
 - `GET /` → devuelve `public/index.html`.
-- `GET /es-MX/cual-es-mi-ip` → render SSR con IP real y geodatos (cuando disponibles), hreflang completo.
+- `GET /es-LA/cual-es-mi-ip` → render SSR con IP real y geodatos (cuando disponibles), hreflang completo.
 - `GET /en/what-is-my-ip`, `/pt-BR/qual-e-meu-ip`, `/fr-FR/quelle-est-mon-ip` → contenidos localizados correctos.
 - `GET /api/ip` → JSON con IP y versión en <200 ms (local).
 - `GET /api/geo` → JSON con campos completos y cabeceras de caché.
@@ -274,4 +276,3 @@ GEO_API_TOKEN=
 - Contenido educativo ampliado y páginas secundarias.
 - Pseudolocalización y soporte RTL.
 - CI que valide locales y slugs (linters personalizados).
-

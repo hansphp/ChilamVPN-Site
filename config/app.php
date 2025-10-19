@@ -124,7 +124,8 @@ return [
     ],
 
     'supported_locales' => [
-        'es-MX',
+        'es',
+        'es-LA',
         'en',
         'pt-BR',
         'fr-FR',

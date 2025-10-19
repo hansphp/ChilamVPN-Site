@@ -51,6 +51,16 @@
         <div class="hero__content">
           <h1 class="hero__title">{{ __('ip.title') }}</h1>
           <p class="hero__tagline">{{ __('ip.desc') }}</p>
+          @if(!empty($ipDetails['ip']))
+            <div class="hero-ip">
+              <span class="hero-ip__label">{{ __('ip.your_ip') }}</span>
+              <span class="hero-ip__value" data-copy-value>{{ $ipDetails['ip'] }}</span>
+              <button type="button" class="hero-ip__copy" data-copy-button data-copy-label="{{ __('ip.copy') }}">
+                {{ __('ip.copy') }}
+              </button>
+              <span class="hero-ip__status" data-copy-status aria-live="polite"></span>
+            </div>
+          @endif
           @if(data_get($content, 'hero.cta'))
             <a href="{{ data_get($content, 'hero.cta_href', '#ip-insights') }}" class="cta-button">
               {{ data_get($content, 'hero.cta') }}
@@ -66,38 +76,33 @@
         <div class="ip-insights__grid">
           <article class="ip-card ip-card--primary">
             <h3>{{ __('ip.your_ip') }}</h3>
-            <p class="ip-card__value" data-copy-value aria-live="polite">
+            <p class="ip-card__value" aria-live="polite">
               {{ $ipDetails['ip'] ?? __('ip.unknown') }}
             </p>
           </article>
           <article class="ip-card">
             <h3>{{ __('ip.ip_type') }}</h3>
-            <p>{{ $ipDetails['version'] }}</p>
+            <p><strong>{{ $ipDetails['version'] }}</strong></p>
           </article>
           <article class="ip-card">
             <h3>{{ __('ip.location') }}</h3>
             <p>
               @if(!empty($ipDetails['country_code']))
-                <img class="ip-flag" src="{{ asset('pics/' . strtolower($ipDetails['country_code']) . '.png') }}" alt="{{ $ipDetails['country_code'] }} flag" />
+                <img class="ip-flag" src="{{ asset('flags/' . strtolower($ipDetails['country_code']) . '.svg') }}" alt="{{ $ipDetails['country_code'] }} flag" />
               @endif
-              {{ $ipDetails['location'] }}
+              <strong>{{ $ipDetails['location'] }}</strong>
             </p>
           </article>
           <article class="ip-card">
             <h3>{{ __('ip.isp') }}</h3>
-            <p>{{ $ipDetails['isp'] }}</p>
+            <p><strong>{{ $ipDetails['isp'] }}</strong></p>
           </article>
         </div>
-        <div class="ip-insights__actions">
-          <button type="button" class="cta-button cta-button--outline" data-copy-button data-copy-label="{{ __('ip.copy') }}">
-            {{ __('ip.copy') }}
-          </button>
-          <p class="ip-insights__meta">
-            {{ __('ip.updated') }}:
-            {{ \Illuminate\Support\Carbon::parse($ipDetails['updated_at'])->locale(str_replace('-', '_', $locale))->isoFormat('LLL') }}
-            <span class="ip-insights__status" data-copy-status aria-live="polite"></span>
-          </p>
-        </div>
+        <p class="ip-insights__meta">
+          {{ __('ip.updated') }}:
+          {{ \Illuminate\Support\Carbon::parse($ipDetails['updated_at'])->locale(str_replace('-', '_', $locale))->isoFormat('LLL') }}
+          <span class="ip-insights__status" data-copy-status aria-live="polite"></span>
+        </p>
       </section>
 
       <section class="ip-diff">
@@ -202,7 +207,7 @@
 
         const copyButton = document.querySelector('[data-copy-button]');
         const valueElement = document.querySelector('[data-copy-value]');
-        const statusElement = document.querySelector('[data-copy-status]');
+        const statusElements = document.querySelectorAll('[data-copy-status]');
 
         if (copyButton && valueElement) {
           copyButton.addEventListener('click', async () => {
@@ -213,13 +218,13 @@
 
             try {
               await navigator.clipboard.writeText(value);
-              if (statusElement) {
-                statusElement.textContent = ' · {{ __('ip.copied') }}';
-              }
+              statusElements.forEach((node) => {
+                node.textContent = ' · {{ __('ip.copied') }}';
+              });
             } catch {
-              if (statusElement) {
-                statusElement.textContent = '';
-              }
+              statusElements.forEach((node) => {
+                node.textContent = '';
+              });
             }
           });
         }

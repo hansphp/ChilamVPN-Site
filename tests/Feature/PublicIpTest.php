@@ -17,7 +17,7 @@ class PublicIpTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertRedirect('/es-MX');
+        $response->assertRedirect('/es-LA');
     }
 
     public function testHomePageDoesNotContainIpPanel(): void
@@ -64,6 +64,7 @@ class PublicIpTest extends TestCase
             ->assertJsonStructure([
                 'ip',
                 'country',
+                'country_iso_code',
                 'region',
                 'city',
                 'lat',

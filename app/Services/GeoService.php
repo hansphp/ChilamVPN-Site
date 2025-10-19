@@ -70,8 +70,8 @@ class GeoService
 
         try {
             $languages = $this->preferredLanguages($locale);
-            $reader = new Reader($path, $languages);
-            $city = $reader->city($ip);
+            $reader = new Reader($path);
+            $city = $reader->city($ip, $languages);
             $reader->close();
 
             $asnData = $this->asn($ip);
@@ -104,8 +104,8 @@ class GeoService
 
         try {
             $languages = $this->preferredLanguages($locale);
-            $reader = new Reader($path, $languages);
-            $record = $reader->country($ip);
+            $reader = new Reader($path);
+            $record = $reader->country($ip, $languages);
             $reader->close();
 
             return [
