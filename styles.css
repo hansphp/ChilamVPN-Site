@@ -1,0 +1,181 @@
+
+/* Normalización básica */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #0c1222;
+  background: #f7f9fc;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+}
+
+a {
+  color: #f2b705;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+header {
+  background: linear-gradient(135deg, #0c1222 0%, #1c8c5e 100%);
+  color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-icon {
+  width: 64px;
+  height: 64px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background-color: #f2b705;
+  color: #0c1222;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  background-color: #e0a004;
+}
+
+section {
+  padding: 4rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #0c1222;
+}
+
+.section-title--compact {
+  margin-bottom: 1rem;
+}
+
+.section-text {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #3d455c;
+  text-align: center;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.feature {
+  flex: 1 1 250px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.feature h3 {
+  margin-bottom: 0.5rem;
+  color: #1c8c5e;
+}
+
+.feature p {
+  font-size: 0.95rem;
+  color: #3d455c;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.step-number {
+  background-color: #00a389;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.step-content h4 {
+  margin-bottom: 0.25rem;
+  color: #1c8c5e;
+}
+
+footer {
+  background-color: #0c1222;
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 3rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .features {
+    flex-direction: column;
+  }
+
+  .step {
+    flex-direction: column;
+  }
+}
+
