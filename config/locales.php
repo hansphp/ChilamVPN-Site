@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'default' => 'es',
+    'default' => 'es-MX',
 
     'supported' => [
-        'es' => [
-            'label' => 'Español',
-            'aliases' => ['es', 'es-mx', 'es-es', 'es-419'],
+        'es-MX' => [
+            'label' => 'Español (México)',
+            'aliases' => ['es-mx', 'es', 'es-es', 'es-419'],
         ],
         'en' => [
             'label' => 'English',
@@ -15,6 +15,10 @@ return [
         'pt-br' => [
             'label' => 'Português (Brasil)',
             'aliases' => ['pt-br', 'pt'],
+        ],
+        'fr-FR' => [
+            'label' => 'Français (France)',
+            'aliases' => ['fr-fr', 'fr'],
         ],
     ],
 ];

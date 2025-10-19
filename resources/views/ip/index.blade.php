@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ data_get($content, 'meta.title', 'ChilamVPN') }}</title>
-    <meta name="description" content="{{ data_get($content, 'meta.description', '') }}" />
+    <title>{{ data_get($meta, 'title') }} · {{ data_get($content, 'hero.brand', 'ChilamVPN') }}</title>
+    <meta name="description" content="{{ data_get($meta, 'description', data_get($content, 'meta.description', '')) }}" />
     <link rel="stylesheet" href="{{ asset('styles.css') }}" />
+    @foreach($alternates as $alternate)
+      <link rel="alternate" hreflang="{{ $alternate['hreflang'] }}" href="{{ $alternate['url'] }}">
+    @endforeach
   </head>
   <body>
     <header class="site-header">
@@ -46,7 +49,7 @@
 
       <div class="hero">
         <div class="hero__content">
-          <h1 class="hero__title">{{ data_get($content, 'hero.brand', 'ChilamVPN') }}</h1>
+          <h1 class="hero__title">{{ trans('home.title') }}</h1>
           <p class="hero__tagline">{{ data_get($content, 'hero.tagline') }}</p>
           @if(data_get($content, 'hero.cta'))
             <a href="{{ data_get($content, 'hero.cta_href', '#benefits') }}" class="cta-button">
@@ -58,6 +61,43 @@
     </header>
 
     <main>
+      <section id="ip-insights" class="ip-insights">
+        <h2 class="section-title section-title--light">{{ trans('home.heading') }}</h2>
+        <div class="ip-insights__grid">
+          <article class="ip-card ip-card--primary">
+            <h3>{{ trans('home.your_ip') }}</h3>
+            <p class="ip-card__value" data-copy-value aria-live="polite">
+              {{ $ipDetails['ip'] ?? trans('home.unknown') }}
+            </p>
+          </article>
+          <article class="ip-card">
+            <h3>{{ trans('home.ip_type') }}</h3>
+            <p>{{ $ipDetails['version'] }}</p>
+          </article>
+          <article class="ip-card">
+            <h3>{{ trans('home.location') }}</h3>
+            <p>{{ $ipDetails['location'] }}</p>
+          </article>
+          <article class="ip-card">
+            <h3>{{ trans('home.isp') }}</h3>
+            <p>{{ $ipDetails['isp'] }}</p>
+          </article>
+        </div>
+        <div class="ip-insights__actions">
+          <button type="button" class="cta-button cta-button--outline" data-copy-button data-copy-label="{{ trans('home.copy') }}">
+            {{ trans('home.copy') }}
+          </button>
+          <p class="ip-insights__meta">
+            {{ trans('home.updated') }}:
+            {{ \Illuminate\Support\Carbon::parse($ipDetails['updated_at'])->locale(str_replace('-', '_', $locale))->isoFormat('LLL') }}
+            <span class="ip-insights__status" data-copy-status aria-live="polite"></span>
+          </p>
+        </div>
+        <p class="ip-insights__note">
+          {{ trans('home.educational_body') }}
+        </p>
+      </section>
+
       <section id="benefits">
         <h2 class="section-title">{{ data_get($content, 'sections.benefits.title') }}</h2>
         <div class="features">
@@ -103,41 +143,69 @@
             @endforeach
           </p>
         </div>
-        <form class="footer-language" action="{{ route('home') }}" method="get">
+        <div class="footer-language">
           <label for="language-select" class="footer-language__label">
             <svg aria-hidden="true" class="footer-language__icon" viewBox="0 0 20 20">
               <path d="M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM2.75 10h14.5M10 2.5c2 2 3.25 4.5 3.25 7.5S12 15 10 17.5M10 2.5C8 4.5 6.75 7 6.75 10S8 15 10 17.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span class="sr-only">{{ data_get($content, 'ui.language_switcher_title', 'Change language') }}</span>
           </label>
-          <select id="language-select" name="lang" class="footer-language__select">
+          <select id="language-select" class="footer-language__select">
             @foreach($locales as $option)
-              <option value="{{ $option['code'] }}" @selected($option['active'])>{{ $option['label'] }}</option>
+              <option value="{{ $option['code'] }}" data-url="{{ $option['url'] }}" @selected($option['active'])>
+                {{ $option['label'] }}
+              </option>
             @endforeach
           </select>
-        </form>
+        </div>
       </div>
     </footer>
 
     <script>
-      (function () {
-        const select = document.getElementById('language-select');
-        if (select) {
-          select.addEventListener('change', function (event) {
-            const params = new URLSearchParams(window.location.search);
-            params.set('lang', event.target.value);
-            window.location.href = `${window.location.pathname}?${params.toString()}`;
-          });
-        }
-
-        document.querySelectorAll('.nav-dropdown a').forEach(function (link) {
-          link.addEventListener('click', function () {
+      (() => {
+        document.querySelectorAll('.nav-dropdown a').forEach((link) => {
+          link.addEventListener('click', () => {
             const parent = link.closest('details');
             if (parent) {
               parent.removeAttribute('open');
             }
           });
         });
+
+        const select = document.getElementById('language-select');
+        if (select) {
+          select.addEventListener('change', (event) => {
+            const option = event.target.selectedOptions[0];
+            const targetUrl = option?.dataset?.url;
+            if (targetUrl) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+
+        const copyButton = document.querySelector('[data-copy-button]');
+        const valueElement = document.querySelector('[data-copy-value]');
+        const statusElement = document.querySelector('[data-copy-status]');
+
+        if (copyButton && valueElement) {
+          copyButton.addEventListener('click', async () => {
+            const value = valueElement.textContent.trim();
+            if (!value || value === '{{ trans('home.unknown') }}') {
+              return;
+            }
+
+            try {
+              await navigator.clipboard.writeText(value);
+              if (statusElement) {
+                statusElement.textContent = ' · {{ trans('home.copied') }}';
+              }
+            } catch {
+              if (statusElement) {
+                statusElement.textContent = '';
+              }
+            }
+          });
+        }
       })();
     </script>
   </body>

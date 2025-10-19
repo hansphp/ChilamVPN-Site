@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "title": "ChilamVPN – Plateforme VPN cloud en libre-service",
+    "description": "Connectez vos systèmes et unités métier en toute sécurité grâce à notre VPN cloud en libre-service."
+  },
+  "nav": {
+    "tools": "Outils",
+    "tools_items": [
+      { "label": "Quelle est mon IP publique ?", "href": "#public-ip" }
+    ],
+    "login": "Se connecter",
+    "login_href": "https://portal.chilamvpn.com/?lang=fr-FR",
+    "cta": "Commencer maintenant",
+    "cta_href": "#benefits"
+  },
+  "hero": {
+    "brand": "ChilamVPN",
+    "tagline": "Connectez vos systèmes et unités métier en toute sécurité grâce à notre VPN cloud en libre-service.",
+    "cta": "Commencer maintenant",
+    "cta_href": "#benefits"
+  },
+  "sections": {
+    "benefits": {
+      "title": "Avantages",
+      "items": [
+        {
+          "title": "Libre-service simple",
+          "body": "Enregistrez des utilisateurs et des appareils en quelques minutes via une interface web intuitive. Téléchargez des configurations prêtes à l’emploi et connectez-vous sans assistance IT."
+        },
+        {
+          "title": "Sécurité renforcée",
+          "body": "Technologie VPN de dernière génération avec cryptographie moderne et performances optimisées afin de garantir des connexions chiffrées de haut niveau."
+        },
+        {
+          "title": "Sans matériel supplémentaire",
+          "body": "Connectez-vous à vos systèmes sans pare-feux physiques ni adresses IP publiques. Tout est provisionné automatiquement dans le cloud."
+        },
+        {
+          "title": "Évolutif et flexible",
+          "body": "Ajoutez des appareils et des utilisateurs, étendez les connexions à différentes régions et gérez les accès via un tableau de bord central."
+        }
+      ]
+    },
+    "how": {
+      "title": "Comment ça fonctionne ?",
+      "steps": [
+        {
+          "title": "Demandez votre compte",
+          "body": "Accédez à la plateforme en toute sécurité. Chaque utilisateur dispose de son propre tableau de bord et de clés uniques."
+        },
+        {
+          "title": "Téléchargez la configuration",
+          "body": "Générez automatiquement votre fichier de configuration VPN ainsi qu’un code QR pour l’importer sur vos appareils."
+        },
+        {
+          "title": "Connectez vos équipes",
+          "body": "Activez la connexion et commencez à relier vos systèmes et unités métier via notre réseau sécurisé."
+        }
+      ]
+    },
+    "legal": {
+      "title": "Utilisation responsable",
+      "body": "ChilamVPN est conçu pour connecter en toute sécurité les sites et systèmes d’entreprise. Nous ne fournissons pas de VPN pour la navigation anonyme ni pour contourner les restrictions géographiques ; notre priorité est une connectivité fiable et conforme."
+    }
+  },
+  "footer": {
+    "notice": "© 2025 ChilamVPN. Tous droits réservés.",
+    "links": [
+      { "label": "Conditions d’utilisation", "href": "#" },
+      { "label": "Politique de confidentialité", "href": "#" }
+    ]
+  },
+  "ui": {
+    "language_switcher_title": "Changer de langue ?",
+    "language_switcher_hint": "Sélectionnez une langue pour afficher cette page.",
+    "copy_cta": "Copier l’IP"
+  }
+}
+

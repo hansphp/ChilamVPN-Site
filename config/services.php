@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'geo' => [
+        'ip_hash_key' => env('IP_HASH_KEY'),
+        'maxmind_city_db' => env('MAXMIND_CITY_DB'),
+        'maxmind_asn_db' => env('MAXMIND_ASN_DB'),
+        'http_endpoint' => env('GEO_API_URL'),
+        'http_token' => env('GEO_API_TOKEN'),
+    ],
+
 ];

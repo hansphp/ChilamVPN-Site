@@ -22,10 +22,13 @@ class LocalizedContent
     public function home(string $locale): array
     {
         $normalizedLocale = $this->normalizeLocale($locale);
-        $supportedLocales = array_keys(config('locales.supported'));
+        $supportedLocales = collect(array_keys(config('locales.supported', [])))
+            ->map(fn ($code) => $this->normalizeLocale($code))
+            ->all();
+        $defaultLocale = $this->normalizeLocale(config('locales.default', 'en'));
 
         if (! in_array($normalizedLocale, $supportedLocales, true)) {
-            $normalizedLocale = config('locales.default');
+            $normalizedLocale = $defaultLocale;
         }
 
         $path = resource_path('content/home/'.$normalizedLocale.'.json');
