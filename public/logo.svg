@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="ChilamVPN">
+  <defs>
+    <linearGradient id="grad-main" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1222"/>
+      <stop offset="100%" stop-color="#1c8c5e"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="24" fill="url(#grad-main)"/>
+  <path d="M90 32a44 44 0 1 0 0 64" fill="none" stroke="#f2b705" stroke-width="10" stroke-linecap="round"/>
+  <path d="M78 40a30 30 0 0 0 0 48" fill="none" stroke="#1c8c5e" stroke-width="8" stroke-linecap="round"/>
+  <path d="M66 48a20 20 0 0 0 0 32" fill="none" stroke="#00a389" stroke-width="6" stroke-linecap="round"/>
+</svg>
+

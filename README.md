@@ -1,66 +1,193 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+![ChilamVPN banner](public/logo.svg)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# ChilamVPN Site
 
-## About Laravel
+Landing multilenguaje de ChilamVPN construida con Laravel 11. La página inicial se renderiza en servidor reutilizando el diseño estático del proyecto y consume contenido localizado desde archivos JSON cacheados vía Redis.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> Estado actual: MVP centrado en marketing. La obtención de IP y geodatos llegará en la siguiente fase.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Contenido
+- [Requisitos](#requisitos)
+- [Configuracion inicial](#configuracion-inicial)
+- [Ejecucion en desarrollo](#ejecucion-en-desarrollo)
+- [Internacionalizacion](#internacionalizacion)
+- [Cache y Redis](#cache-y-redis)
+- [Pruebas](#pruebas)
+- [Checklist de despliegue](#checklist-de-despliegue)
+- [Despliegue en produccion](#despliegue-en-produccion)
+- [Mantenimiento](#mantenimiento)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requisitos
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+| Componente | Version recomendada |
+|------------|---------------------|
+| PHP        | 8.2.x con extensiones `bcmath`, `ctype`, `fileinfo`, `json`, `mbstring`, `openssl`, `pdo`, `tokenizer`, `xml` |
+| Composer   | 2.x |
+| Node.js    | >= 18 LTS (solo si se construyen assets con Vite) |
+| Redis      | 6.x o superior (opcional, recomendado para cache) |
+| Base de datos | No requerida en este MVP |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Configuracion inicial
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Clonar el repositorio:
+   ```bash
+   git clone git@github.com:tu-org/chilamvpn-site.git
+   cd chilamvpn-site
+   ```
 
-### Premium Partners
+2. Instalar dependencias PHP:
+   ```bash
+   composer install
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+3. (Opcional) Instalar dependencias front-end:
+   ```bash
+   npm install
+   ```
 
-## Contributing
+4. Copiar variables de entorno:
+   ```bash
+   cp .env.example .env
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. Generar la clave de aplicacion:
+   ```bash
+   php artisan key:generate
+   ```
 
-## Code of Conduct
+6. Ajustar `.env`:
+   ```dotenv
+   APP_NAME="ChilamVPN"
+   APP_ENV=local
+   APP_URL=http://localhost
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   CACHE_DRIVER=file        # usar redis en produccion
+   SESSION_DRIVER=file
 
-## Security Vulnerabilities
+   REDIS_HOST=127.0.0.1
+   REDIS_PASSWORD=null
+   REDIS_PORT=6379
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   APP_LOCALE=es
+   ```
 
-## License
+7. (Opcional) Construir assets:
+   ```bash
+   npm run build
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Ejecucion en desarrollo
+
+```bash
+php artisan serve
+```
+
+Entrar a `http://localhost:8000`. El idioma activo se decide asi:
+1. Parametro `?lang=xx`.
+2. Valor guardado en sesion.
+3. Cabecera `Accept-Language`.
+4. Locale por defecto (`config/locales.php`).
+
+---
+
+## Internacionalizacion
+
+- Configuracion de idiomas: `config/locales.php`.
+- Contenido por idioma: `resources/content/home/{locale}.json`.
+- Vista SSR: `resources/views/home.blade.php`.
+
+Agregar un idioma nuevo:
+1. Registrar el locale y sus alias en `config/locales.php`.
+2. Crear el archivo JSON con la estructura existente.
+3. Limpiar cache (`php artisan cache:clear`) si el contenido estaba almacenado.
+
+---
+
+## Cache y Redis
+
+El servicio `LocalizedContent` carga los JSON y los guarda en cache por una hora usando el driver definido en `CACHE_DRIVER`. Para aprovechar Redis:
+
+```dotenv
+CACHE_DRIVER=redis
+REDIS_PREFIX=chilamvpn_site_
+```
+
+Comandos utiles:
+```bash
+php artisan cache:clear
+php artisan config:clear
+```
+
+---
+
+## Pruebas
+
+```bash
+phpunit
+```
+
+Validaciones manuales sugeridas:
+- Cambiar el idioma del navegador y recargar la pagina.
+- Probar `/?lang=en` o `/?lang=pt-br`.
+- Confirmar que el idioma se mantiene al navegar y recargar.
+
+---
+
+## Checklist de despliegue
+
+- [ ] `APP_ENV=production` y `APP_DEBUG=false`.
+- [ ] `APP_URL` apunta al dominio publico.
+- [ ] Redis configurado y accesible (`CACHE_DRIVER=redis`).
+- [ ] `php artisan config:cache` y `php artisan route:cache` ejecutados.
+- [ ] HTTPS forzado desde el servidor o CDN.
+- [ ] Document root configurado en `public/`.
+- [ ] Compresion gzip o brotli habilitada.
+- [ ] `robots.txt` ajustado si se requieren reglas especiales para `/api/*`.
+
+---
+
+## Despliegue en produccion
+
+Ejemplo de pasos (Forge, Vapor, Envoy u otro pipeline):
+
+```bash
+composer install --no-dev --optimize-autoloader
+npm ci
+npm run build
+
+php artisan migrate --force  # opcional si se agregan tablas
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+Configurar el servidor web:
+- Document root: `/ruta/al/proyecto/public`.
+- Regla `try_files $uri $uri/ /index.php?$query_string;`.
+- Variables de entorno seguras gestionadas via `.env` o secretos del proveedor.
+
+---
+
+## Mantenimiento
+
+- Actualizar traducciones: editar JSON y limpiar cache.
+- Agregar idiomas: seguir los pasos de [Internacionalizacion](#internacionalizacion).
+- Supervisar Redis: revisar memoria, claves caducadas y TTL.
+- Mantener dependencias:
+  ```bash
+  composer update
+  npm update
+  ```
+- Verificar periodicamente SEO (hreflang, canonical) y Core Web Vitals.
+
+---
+
+(c) 2025 ChilamVPN. Todos los derechos reservados.

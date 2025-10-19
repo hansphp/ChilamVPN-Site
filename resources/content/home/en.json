@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "ChilamVPN – Self-service cloud VPN platform",
+    "description": "Securely connect your systems and business units through our self-service cloud VPN."
+  },
+  "hero": {
+    "brand": "ChilamVPN",
+    "tagline": "Securely connect your systems and business units through our self-service cloud VPN.",
+    "cta": "Get started",
+    "cta_href": "#benefits"
+  },
+  "sections": {
+    "benefits": {
+      "title": "Benefits",
+      "items": [
+        {
+          "title": "Simple self-service",
+          "body": "Register users and devices in minutes with an intuitive web interface. Download ready-to-use configurations and connect without IT support."
+        },
+        {
+          "title": "Strong security",
+          "body": "Built on next-generation VPN technology with modern cryptography and optimized performance to guarantee encrypted connections."
+        },
+        {
+          "title": "No extra hardware",
+          "body": "Connect to your systems without physical firewalls or public IP addresses. Everything is provisioned automatically in the cloud."
+        },
+        {
+          "title": "Scalable and flexible",
+          "body": "Add devices and users, extend your connections across regions, and manage access from a streamlined admin panel."
+        }
+      ]
+    },
+    "how": {
+      "title": "How it works",
+      "steps": [
+        {
+          "title": "Request your account",
+          "body": "Sign in securely to the platform. Each user receives a personal dashboard and unique keys."
+        },
+        {
+          "title": "Download the configuration",
+          "body": "Automatically generate your VPN configuration file and a QR code to import it on your devices."
+        },
+        {
+          "title": "Connect your teams",
+          "body": "Activate the connection and start linking your systems and business units through our secure network."
+        }
+      ]
+    },
+    "legal": {
+      "title": "Responsible use",
+      "body": "ChilamVPN is designed to securely connect corporate sites and systems. We do not provide VPN services for anonymous browsing or bypassing geographic restrictions; our priority is reliable connectivity and policy compliance."
+    }
+  },
+  "footer": {
+    "notice": "© 2025 ChilamVPN. All rights reserved.",
+    "links": [
+      { "label": "Terms of use", "href": "#" },
+      { "label": "Privacy policy", "href": "#" }
+    ]
+  },
+  "ui": {
+    "language_switcher_title": "Need a different language?",
+    "language_switcher_hint": "Select a language to view this page.",
+    "copy_cta": "Copy IP"
+  }
+}
+

@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "ChilamVPN – Plataforma de VPN cloud de autoservicio",
+    "description": "Conecta tus sistemas y unidades de negocio de forma segura a través de nuestra VPN cloud de autoservicio."
+  },
+  "hero": {
+    "brand": "ChilamVPN",
+    "tagline": "Conecta tus sistemas y unidades de negocio de forma segura a través de nuestra VPN cloud de autoservicio.",
+    "cta": "Comienza ahora",
+    "cta_href": "#benefits"
+  },
+  "sections": {
+    "benefits": {
+      "title": "Beneficios",
+      "items": [
+        {
+          "title": "Autoservicio sencillo",
+          "body": "Registra usuarios y dispositivos en minutos desde una interfaz web intuitiva. Descarga configuraciones listas para usar y conecta sin soporte de TI."
+        },
+        {
+          "title": "Seguridad robusta",
+          "body": "Tecnología VPN de última generación con criptografía moderna y rendimiento optimizado para garantizar conexiones cifradas de alto nivel."
+        },
+        {
+          "title": "Sin hardware adicional",
+          "body": "Conéctate a tus sistemas sin firewalls físicos ni IP públicas. Todo se provisiona en la nube de forma automática."
+        },
+        {
+          "title": "Escalable y flexible",
+          "body": "Añade dispositivos y usuarios, extiende conexiones a distintas regiones y gestiona accesos desde un panel administrativo esencial."
+        }
+      ]
+    },
+    "how": {
+      "title": "¿Cómo funciona?",
+      "steps": [
+        {
+          "title": "Solicita tu cuenta",
+          "body": "Accede a la plataforma de forma segura. Cada usuario obtiene su panel de control y claves únicas."
+        },
+        {
+          "title": "Descarga la configuración",
+          "body": "Genera tu archivo de configuración VPN y un código QR para importarlo en tus dispositivos."
+        },
+        {
+          "title": "Conecta tus equipos",
+          "body": "Activa la conexión y comunica tus sistemas y unidades de negocio a través de nuestra red segura."
+        }
+      ]
+    },
+    "legal": {
+      "title": "Uso responsable",
+      "body": "ChilamVPN está diseñada para conectar sedes y sistemas corporativos de manera segura. No ofrecemos VPN para navegación anónima ni elusión de restricciones geográficas; nuestro objetivo es proporcionar conectividad fiable y cumplimiento de políticas."
+    }
+  },
+  "footer": {
+    "notice": "© 2025 ChilamVPN. Todos los derechos reservados.",
+    "links": [
+      { "label": "Términos de uso", "href": "#" },
+      { "label": "Política de privacidad", "href": "#" }
+    ]
+  },
+  "ui": {
+    "language_switcher_title": "¿Quieres cambiar de idioma?",
+    "language_switcher_hint": "Selecciona un idioma para ver esta página.",
+    "copy_cta": "Copiar IP"
+  }
+}
