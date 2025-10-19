@@ -261,6 +261,10 @@ a:hover {
   color: rgba(255, 255, 255, 0.85);
 }
 
+.nav-item--dropdown summary::marker {
+  content: '';
+}
+
 .section-title--light {
   color: #fff;
 }
@@ -359,8 +363,8 @@ a:hover {
 }
 
 .ip-flag {
-  width: 22px;
-  height: 16px;
+  width: 18px;
+  height: 12px;
   object-fit: cover;
   margin-right: 0.4rem;
   border-radius: 2px;
@@ -543,6 +547,7 @@ footer a {
   width: 18px;
   height: 18px;
   color: rgba(255, 255, 255, 0.85);
+  flex-shrink: 0;
 }
 
 .footer-language__select {
@@ -692,8 +697,12 @@ footer a {
     font-size: 2.2rem;
   }
 
+  .hero-ip {
+    align-items: stretch;
+  }
+
   .hero-ip__value {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .hero-ip__copy {
