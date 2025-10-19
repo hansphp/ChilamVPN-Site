@@ -3,6 +3,16 @@
     "title": "ChilamVPN – Self-service cloud VPN platform",
     "description": "Securely connect your systems and business units through our self-service cloud VPN."
   },
+  "nav": {
+    "tools": "Tools",
+    "tools_items": [
+      { "label": "What is my public IP?", "href": "#public-ip" }
+    ],
+    "login": "Log in",
+    "login_href": "#",
+    "cta": "Get started",
+    "cta_href": "#benefits"
+  },
   "hero": {
     "brand": "ChilamVPN",
     "tagline": "Securely connect your systems and business units through our self-service cloud VPN.",
@@ -66,4 +76,3 @@
     "copy_cta": "Copy IP"
   }
 }
-

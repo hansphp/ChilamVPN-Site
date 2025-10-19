@@ -3,6 +3,16 @@
     "title": "ChilamVPN – Plataforma de VPN cloud de autoservicio",
     "description": "Conecta tus sistemas y unidades de negocio de forma segura a través de nuestra VPN cloud de autoservicio."
   },
+  "nav": {
+    "tools": "Herramientas",
+    "tools_items": [
+      { "label": "¿Cuál es mi IP pública?", "href": "#public-ip" }
+    ],
+    "login": "Iniciar sesión",
+    "login_href": "#",
+    "cta": "Comienza ahora",
+    "cta_href": "#benefits"
+  },
   "hero": {
     "brand": "ChilamVPN",
     "tagline": "Conecta tus sistemas y unidades de negocio de forma segura a través de nuestra VPN cloud de autoservicio.",

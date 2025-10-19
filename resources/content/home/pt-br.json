@@ -3,6 +3,16 @@
     "title": "ChilamVPN – Plataforma de VPN em nuvem de autoatendimento",
     "description": "Conecte com segurança seus sistemas e unidades de negócio por meio da nossa VPN em nuvem de autoatendimento."
   },
+  "nav": {
+    "tools": "Ferramentas",
+    "tools_items": [
+      { "label": "Qual é o meu IP público?", "href": "#public-ip" }
+    ],
+    "login": "Entrar",
+    "login_href": "#",
+    "cta": "Comece agora",
+    "cta_href": "#benefits"
+  },
   "hero": {
     "brand": "ChilamVPN",
     "tagline": "Conecte com segurança seus sistemas e unidades de negócio por meio da nossa VPN em nuvem de autoatendimento.",
