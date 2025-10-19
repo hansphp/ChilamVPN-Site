@@ -13,7 +13,22 @@ class PublicIpTest extends TestCase
         config(['services.geo.ip_hash_key' => 'testing-key']);
     }
 
-    public function testLocalizedPageRendersSuccessfully(): void
+    public function testLandingRedirectsToDefaultLocale(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertRedirect('/es-MX');
+    }
+
+    public function testHomePageDoesNotContainIpPanel(): void
+    {
+        $response = $this->get('/en');
+
+        $response->assertStatus(200);
+        $response->assertDontSee('Your connection details');
+    }
+
+    public function testIpToolPageRendersSuccessfully(): void
     {
         $response = $this
             ->withServerVariables(['REMOTE_ADDR' => '203.0.113.42'])

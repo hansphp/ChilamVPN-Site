@@ -6,7 +6,7 @@
   "nav": {
     "tools": "Tools",
     "tools_items": [
-      { "label": "What is my public IP?", "href": "#public-ip" }
+      { "label": "What is my public IP?", "target": "ip-tool" }
     ],
     "login": "Log in",
     "login_href": "https://portal.chilamvpn.com/?lang=en",

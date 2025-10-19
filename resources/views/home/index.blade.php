@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ data_get($meta, 'title') }} · {{ data_get($content, 'hero.brand', 'ChilamVPN') }}</title>
+    <title>{{ data_get($meta, 'title', data_get($content, 'hero.brand', 'ChilamVPN')) }}</title>
     <meta name="description" content="{{ data_get($meta, 'description', data_get($content, 'meta.description', '')) }}" />
     <link rel="stylesheet" href="{{ asset('styles.css') }}" />
     @foreach($alternates as $alternate)
@@ -31,9 +31,9 @@
               </svg>
             </summary>
             <ul class="nav-dropdown" role="menu">
-              @foreach(data_get($content, 'nav.tools_items', []) as $tool)
+              @foreach($toolLinks as $tool)
                 <li role="none">
-                  <a role="menuitem" href="{{ $tool['href'] ?? '#' }}">{{ $tool['label'] ?? '' }}</a>
+                  <a role="menuitem" href="{{ $tool['href'] }}">{{ $tool['label'] }}</a>
                 </li>
               @endforeach
             </ul>
@@ -49,7 +49,7 @@
 
       <div class="hero">
         <div class="hero__content">
-          <h1 class="hero__title">{{ trans('home.title') }}</h1>
+          <h1 class="hero__title">{{ data_get($content, 'hero.brand', 'ChilamVPN') }}</h1>
           <p class="hero__tagline">{{ data_get($content, 'hero.tagline') }}</p>
           @if(data_get($content, 'hero.cta'))
             <a href="{{ data_get($content, 'hero.cta_href', '#benefits') }}" class="cta-button">
@@ -61,43 +61,6 @@
     </header>
 
     <main>
-      <section id="ip-insights" class="ip-insights">
-        <h2 class="section-title section-title--light">{{ trans('home.heading') }}</h2>
-        <div class="ip-insights__grid">
-          <article class="ip-card ip-card--primary">
-            <h3>{{ trans('home.your_ip') }}</h3>
-            <p class="ip-card__value" data-copy-value aria-live="polite">
-              {{ $ipDetails['ip'] ?? trans('home.unknown') }}
-            </p>
-          </article>
-          <article class="ip-card">
-            <h3>{{ trans('home.ip_type') }}</h3>
-            <p>{{ $ipDetails['version'] }}</p>
-          </article>
-          <article class="ip-card">
-            <h3>{{ trans('home.location') }}</h3>
-            <p>{{ $ipDetails['location'] }}</p>
-          </article>
-          <article class="ip-card">
-            <h3>{{ trans('home.isp') }}</h3>
-            <p>{{ $ipDetails['isp'] }}</p>
-          </article>
-        </div>
-        <div class="ip-insights__actions">
-          <button type="button" class="cta-button cta-button--outline" data-copy-button data-copy-label="{{ trans('home.copy') }}">
-            {{ trans('home.copy') }}
-          </button>
-          <p class="ip-insights__meta">
-            {{ trans('home.updated') }}:
-            {{ \Illuminate\Support\Carbon::parse($ipDetails['updated_at'])->locale(str_replace('-', '_', $locale))->isoFormat('LLL') }}
-            <span class="ip-insights__status" data-copy-status aria-live="polite"></span>
-          </p>
-        </div>
-        <p class="ip-insights__note">
-          {{ trans('home.educational_body') }}
-        </p>
-      </section>
-
       <section id="benefits">
         <h2 class="section-title">{{ data_get($content, 'sections.benefits.title') }}</h2>
         <div class="features">
@@ -125,7 +88,7 @@
         </div>
       </section>
 
-      <section id="public-ip">
+      <section id="responsible-use">
         <h2 class="section-title section-title--compact">{{ data_get($content, 'sections.legal.title') }}</h2>
         <p class="section-text">
           {{ data_get($content, 'sections.legal.body') }}
@@ -179,30 +142,6 @@
             const targetUrl = option?.dataset?.url;
             if (targetUrl) {
               window.location.href = targetUrl;
-            }
-          });
-        }
-
-        const copyButton = document.querySelector('[data-copy-button]');
-        const valueElement = document.querySelector('[data-copy-value]');
-        const statusElement = document.querySelector('[data-copy-status]');
-
-        if (copyButton && valueElement) {
-          copyButton.addEventListener('click', async () => {
-            const value = valueElement.textContent.trim();
-            if (!value || value === '{{ trans('home.unknown') }}') {
-              return;
-            }
-
-            try {
-              await navigator.clipboard.writeText(value);
-              if (statusElement) {
-                statusElement.textContent = ' · {{ trans('home.copied') }}';
-              }
-            } catch {
-              if (statusElement) {
-                statusElement.textContent = '';
-              }
             }
           });
         }

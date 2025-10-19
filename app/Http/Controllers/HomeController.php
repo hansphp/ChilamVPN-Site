@@ -2,115 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GeoService;
 use App\Services\LocalizedContent;
-use App\Support\IpResolver;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\URL;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class HomeController extends Controller
 {
-    private LocalizedContent $content;
-    private GeoService $geo;
-    private IpResolver $ipResolver;
-
-    public function __construct(LocalizedContent $content, GeoService $geo, IpResolver $ipResolver)
+    public function __construct(private readonly LocalizedContent $content)
     {
-        $this->content = $content;
-        $this->geo = $geo;
-        $this->ipResolver = $ipResolver;
     }
 
-    public function index(Request $request, string $locale, string $slug)
+    public function landing(): RedirectResponse
     {
-        $this->guardSlug($locale, $slug);
+        $defaultLocale = config('locales.default', 'es-MX');
+        $slug = $this->homeSlug($defaultLocale);
 
+        $path = $slug ? sprintf('%s/%s', $defaultLocale, $slug) : $defaultLocale;
+
+        return redirect('/' . ltrim($path, '/'));
+    }
+
+    public function show(string $locale)
+    {
         $pageContent = $this->content->home($locale);
-
-        $clientIp = $this->ipResolver->clientIp($request);
-        $ipVersion = $this->ipResolver->ipVersion($clientIp);
-        $geo = $clientIp ? $this->geo->lookup($clientIp, $locale) : [];
 
         $alternates = $this->buildAlternates($locale);
         $locales = $this->buildLocaleOptions($locale);
+        $toolLinks = $this->buildToolLinks($locale, data_get($pageContent, 'nav.tools_items', []));
 
         $meta = [
-            'title' => trans('home.title'),
-            'description' => trans('home.desc'),
-        ];
-
-        $versionLabel = match ($ipVersion) {
-            'IPv6' => trans('home.ipv6'),
-            'IPv4' => trans('home.ipv4'),
-            default => trans('home.unknown'),
-        };
-
-        $ipDetails = [
-            'ip' => $clientIp,
-            'version' => $versionLabel,
-            'version_raw' => $ipVersion,
-            'location' => $this->formatLocation($geo),
-            'isp' => $this->formatAsn($geo),
-            'updated_at' => now()->toIso8601String(),
+            'title' => data_get($pageContent, 'meta.title') ?? data_get($pageContent, 'hero.brand', 'ChilamVPN'),
+            'description' => data_get($pageContent, 'meta.description'),
         ];
 
         return response()
-            ->view('ip.index', [
+            ->view('home.index', [
                 'locale' => $locale,
                 'content' => $pageContent,
                 'meta' => $meta,
-                'ipDetails' => $ipDetails,
-                'geo' => $geo,
                 'alternates' => $alternates,
                 'locales' => $locales,
+                'toolLinks' => $toolLinks,
             ])
             ->header('Content-Language', $locale)
             ->header('Content-Security-Policy', "default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; base-uri 'self'; frame-ancestors 'none';");
     }
 
-    private function guardSlug(string $locale, string $slug): void
-    {
-        $expected = $this->slugFor($locale);
-
-        if ($expected !== $slug) {
-            throw new NotFoundHttpException();
-        }
-    }
-
-    private function slugFor(string $locale): string
-    {
-        $slugs = config('seo.slugs', []);
-
-        if (! array_key_exists($locale, $slugs)) {
-            throw new NotFoundHttpException();
-        }
-
-        return $slugs[$locale];
-    }
-
     private function buildAlternates(string $activeLocale): array
     {
-        $slugs = config('seo.slugs', []);
+        $slugs = config('seo.home', []);
 
-        $alternates = collect($slugs)->map(function (string $slug, string $locale) use ($activeLocale) {
+        return collect($slugs)->map(function ($slug, string $locale) use ($activeLocale) {
+            $path = $slug ? sprintf('%s/%s', $locale, $slug) : $locale;
+
             return [
                 'locale' => $locale,
                 'hreflang' => str_replace('_', '-', $locale),
-                'url' => URL::to(sprintf('%s/%s', $locale, $slug)),
+                'url' => URL::to($path),
                 'active' => $locale === $activeLocale,
             ];
-        })->values()->all();
-
-        $alternates[] = [
+        })->push([
             'locale' => 'x-default',
             'hreflang' => 'x-default',
-            'url' => URL::to(sprintf('en/%s', $slugs['en'] ?? 'what-is-my-ip')),
+            'url' => URL::to($this->homeSlugPath('en')),
             'active' => false,
-        ];
-
-        return $alternates;
+        ])->all();
     }
 
     private function buildLocaleOptions(string $activeLocale): array
@@ -119,53 +76,48 @@ class HomeController extends Controller
 
         return collect($supported)
             ->map(function (array $meta, string $locale) use ($activeLocale) {
-                $slug = $this->slugFor($locale);
-
                 return [
                     'code' => $locale,
                     'label' => Arr::get($meta, 'label', $locale),
                     'active' => $locale === $activeLocale,
-                    'url' => URL::to(sprintf('%s/%s', $locale, $slug)),
+                    'url' => URL::to($this->homeSlugPath($locale)),
                 ];
             })
             ->values()
             ->all();
     }
 
-    private function formatLocation(array $geo): string
+    private function buildToolLinks(string $locale, array $items): array
     {
-        $parts = array_filter([
-            Arr::get($geo, 'city'),
-            Arr::get($geo, 'region'),
-            Arr::get($geo, 'country'),
-        ]);
+        $ipSlug = Arr::get(config('seo.tools'), 'ip', []);
+        $ipSlug = $ipSlug[$locale] ?? null;
 
-        return $parts ? implode(', ', $parts) : trans('home.unknown');
+        return collect($items)->map(function (array $item) use ($locale, $ipSlug) {
+            $target = Arr::get($item, 'target');
+            $href = Arr::get($item, 'href');
+
+            if ($target === 'ip-tool' && $ipSlug) {
+                $href = URL::to(sprintf('%s/%s', $locale, $ipSlug));
+            }
+
+            return [
+                'label' => Arr::get($item, 'label', ''),
+                'href' => $href ?? '#',
+            ];
+        })->all();
     }
 
-    private function formatAsn(array $geo): string
+    private function homeSlug(string $locale): ?string
     {
-        $asn = Arr::get($geo, 'asn');
+        $slugs = config('seo.home', []);
 
-        if (! is_array($asn)) {
-            return trans('home.unknown');
-        }
+        return $slugs[$locale] ?? null;
+    }
 
-        $number = Arr::get($asn, 'number');
-        $name = Arr::get($asn, 'name');
+    private function homeSlugPath(string $locale): string
+    {
+        $slug = $this->homeSlug($locale);
 
-        if ($number && $name) {
-            return sprintf('AS%d – %s', $number, $name);
-        }
-
-        if ($number) {
-            return sprintf('AS%d', $number);
-        }
-
-        if ($name) {
-            return $name;
-        }
-
-        return trans('home.unknown');
+        return $slug ? sprintf('%s/%s', $locale, $slug) : $locale;
     }
 }

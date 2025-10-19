@@ -332,6 +332,43 @@ a:hover {
   max-width: 720px;
 }
 
+.ip-diff {
+  max-width: 1100px;
+  margin: 3rem auto 0;
+  padding: 0 2rem;
+}
+
+.ip-diff__intro {
+  max-width: 760px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  color: var(--text-subtle);
+  font-size: 1rem;
+}
+
+.ip-diff__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.ip-card--info {
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.ip-card--info h3 {
+  color: var(--brand-mid);
+  margin-bottom: 0.75rem;
+}
+
+.ip-card--info p {
+  color: var(--text-subtle);
+  font-size: 0.97rem;
+}
+
 /* Sections */
 main section {
   padding: 4rem 2rem;
@@ -602,6 +639,11 @@ footer a {
 
   .cta-button {
     width: 100%;
+  }
+
+  .ip-diff {
+    margin: 2.5rem 1.25rem 0;
+    padding: 0;
   }
 
   .ip-card {

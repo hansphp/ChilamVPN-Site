@@ -6,7 +6,7 @@
   "nav": {
     "tools": "Herramientas",
     "tools_items": [
-      { "label": "¿Cuál es mi IP pública?", "href": "#public-ip" }
+      { "label": "¿Cuál es mi IP pública?", "target": "ip-tool" }
     ],
     "login": "Iniciar sesión",
     "login_href": "https://portal.chilamvpn.com/?lang=es-MX",

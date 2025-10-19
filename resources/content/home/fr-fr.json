@@ -6,7 +6,7 @@
   "nav": {
     "tools": "Outils",
     "tools_items": [
-      { "label": "Quelle est mon IP publique ?", "href": "#public-ip" }
+      { "label": "Quelle est mon IP publique ?", "target": "ip-tool" }
     ],
     "login": "Se connecter",
     "login_href": "https://portal.chilamvpn.com/?lang=fr-FR",
@@ -76,4 +76,3 @@
     "copy_cta": "Copier l’IP"
   }
 }
-

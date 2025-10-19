@@ -16,5 +16,8 @@ return [
     'unknown' => 'Não disponível',
     'educational_title' => 'Por que o meu IP importa?',
     'educational_body' => 'Seu IP público identifica a conexão na Internet. A ChilamVPN ajuda a administrar túneis seguros, isolar workloads e proteger o tráfego corporativo sem expor redes internas.',
+    'public_ip_title' => 'O que é um IP público?',
+    'public_ip_body' => 'É o endereço visível na Internet que permite que seus serviços e dispositivos se comuniquem fora da rede. É único por conexão e atribuído pelo provedor.',
+    'private_ip_title' => 'O que é um IP privado?',
+    'private_ip_body' => 'Identifica dispositivos dentro da rede local. Não é roteável na Internet e normalmente é gerenciado por roteadores ou controladores para manter o tráfego interno segmentado.',
 ];
-
