@@ -37,9 +37,10 @@ DatabaseDirectory /absolute/path/to/storage/app/maxmind
 2. **Configura el `.env`:**
    ```dotenv
    IP_HASH_KEY=define-una-clave-larga
-   MAXMIND_CITY_DB=storage/app/maxmind/GeoLite2-City.mmdb
-   MAXMIND_ASN_DB=storage/app/maxmind/GeoLite2-ASN.mmdb
-   ```
+MAXMIND_CITY_DB=storage/app/maxmind/GeoLite2-City.mmdb
+MAXMIND_ASN_DB=storage/app/maxmind/GeoLite2-ASN.mmdb
+MAXMIND_COUNTRY_DB=storage/app/maxmind/GeoLite2-Country.mmdb
+```
    Estas rutas deben coincidir con la carpeta donde se almacenarán las bases.
 
 3. (Opcional) Si vas a utilizar un proveedor HTTP como fallback, define también:

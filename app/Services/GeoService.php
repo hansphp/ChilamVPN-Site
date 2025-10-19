@@ -6,6 +6,7 @@ use GeoIp2\Database\Reader;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -52,6 +53,15 @@ class GeoService
 
     private function lookupMaxMind(string $ip, string $locale): ?array
     {
+        if ($cityData = $this->lookupMaxMindCity($ip, $locale)) {
+            return $cityData;
+        }
+
+        return $this->lookupMaxMindCountry($ip, $locale);
+    }
+
+    private function lookupMaxMindCity(string $ip, string $locale): ?array
+    {
         $path = $this->resolvePath(config('services.geo.maxmind_city_db'));
 
         if (! $path) {
@@ -76,6 +86,38 @@ class GeoService
                 'accuracy_radius_km' => $city->location?->accuracyRadius,
                 'timezone' => $city->location?->timeZone,
                 'asn' => $asnData,
+            ];
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+    }
+
+    private function lookupMaxMindCountry(string $ip, string $locale): ?array
+    {
+        $path = $this->resolvePath(config('services.geo.maxmind_country_db'));
+
+        if (! $path) {
+            return null;
+        }
+
+        try {
+            $languages = $this->preferredLanguages($locale);
+            $reader = new Reader($path, $languages);
+            $record = $reader->country($ip);
+            $reader->close();
+
+            return [
+                'country' => $record->country->name,
+                'country_iso_code' => $record->country->isoCode,
+                'region' => null,
+                'city' => null,
+                'lat' => null,
+                'lon' => null,
+                'accuracy_radius_km' => null,
+                'timezone' => null,
+                'asn' => $this->asn($ip),
             ];
         } catch (\Throwable $e) {
             report($e);
@@ -174,7 +216,9 @@ class GeoService
 
         $fullPath = base_path($path);
 
-        if (! file_exists($fullPath)) {
+        if (! file_exists($fullPath) || ! is_readable($fullPath)) {
+            Log::warning('MaxMind database not accessible', ['path' => $fullPath]);
+
             return null;
         }
 
