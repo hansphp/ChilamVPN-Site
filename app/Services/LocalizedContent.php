@@ -28,15 +28,16 @@ class LocalizedContent
             $normalizedLocale = config('locales.default');
         }
 
-        $cacheKey = sprintf('content:home:%s', $normalizedLocale);
+        $path = resource_path('content/home/'.$normalizedLocale.'.json');
 
-        return $this->cache->remember($cacheKey, now()->addHour(), function () use ($normalizedLocale) {
-            $path = resource_path('content/home/'.$normalizedLocale.'.json');
+        if (! File::exists($path)) {
+            throw new RuntimeException(sprintf('Content file not found for locale [%s].', $normalizedLocale));
+        }
 
-            if (! File::exists($path)) {
-                throw new RuntimeException(sprintf('Content file not found for locale [%s].', $normalizedLocale));
-            }
+        $version = File::lastModified($path);
+        $cacheKey = sprintf('content:home:%s:%s', $normalizedLocale, $version);
 
+        return $this->cache->remember($cacheKey, now()->addHour(), function () use ($path) {
             $decoded = json_decode(File::get($path), true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
@@ -58,4 +59,3 @@ class LocalizedContent
         return Str::lower($locale);
     }
 }
-
