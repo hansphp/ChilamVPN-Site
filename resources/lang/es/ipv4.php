@@ -14,6 +14,7 @@ return [
         'cidr_label' => 'Prefijo (CIDR)',
         'netmask_label' => 'Máscara (opcional)',
         'hint' => 'Escribe un prefijo (por ejemplo /24) o una máscara punteada. La calculadora mantiene ambos valores sincronizados.',
+        'helper_mobile' => 'Puedes escribir el prefijo o la máscara, los campos se sincronizan solos.',
         'submit' => 'Calcular',
     ],
     'results' => [

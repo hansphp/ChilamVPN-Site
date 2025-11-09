@@ -67,6 +67,15 @@
         </div>
         <div class="calculator-layout">
           <article class="calc-card calc-card--form">
+            <div class="calc-card__header">
+              <div class="calc-card__icon" aria-hidden="true">
+                <span>IPv4</span>
+              </div>
+              <div>
+                <p class="calc-card__eyebrow">{{ __('ipv4.hero.tagline') }}</p>
+                <h3 class="calc-card__title">{{ __('ipv4.hero.title') }}</h3>
+              </div>
+            </div>
             <form data-calculator novalidate>
               <div class="input-grid">
                 <label class="input-field">
@@ -83,7 +92,7 @@
                 </label>
               </div>
               <div class="input-actions">
-                <p>{{ __('ipv4.form.hint') }}</p>
+                <p>{{ __('ipv4.form.helper_mobile') }}</p>
                 <button type="submit" class="button button--primary">{{ __('ipv4.form.submit') }}</button>
               </div>
               <p class="form-status" data-status role="alert"></p>
@@ -92,6 +101,20 @@
 
           <article class="calc-card calc-card--results" data-results>
             <h3>{{ __('ipv4.results.heading') }}</h3>
+            <div class="calc-summary">
+              <div class="calc-summary__item">
+                <span>{{ __('ipv4.results.network_address') }}</span>
+                <strong data-field="network">-</strong>
+              </div>
+              <div class="calc-summary__item">
+                <span>{{ __('ipv4.results.broadcast_address') }}</span>
+                <strong data-field="broadcast">-</strong>
+              </div>
+              <div class="calc-summary__item">
+                <span>{{ __('ipv4.results.usable_hosts') }}</span>
+                <strong data-field="usableHosts">-</strong>
+              </div>
+            </div>
             @php
               $resultMap = [
                   'networkBits' => __('ipv4.results.network_bits'),

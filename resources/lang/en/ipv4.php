@@ -14,6 +14,7 @@ return [
         'cidr_label' => 'Prefix (CIDR)',
         'netmask_label' => 'Netmask (optional)',
         'hint' => 'Type a prefix (for example /24) or a dotted netmask. The calculator keeps both values in sync automatically.',
+        'helper_mobile' => 'Fields stay synchronized, so you can type either CIDR or netmask.',
         'submit' => 'Calculate',
     ],
     'results' => [

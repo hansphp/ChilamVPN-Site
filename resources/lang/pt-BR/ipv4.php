@@ -14,6 +14,7 @@ return [
         'cidr_label' => 'Prefixo (CIDR)',
         'netmask_label' => 'Máscara (opcional)',
         'hint' => 'Digite o prefixo (/24, /29, etc.) ou a máscara pontilhada. A ferramenta mantém os campos sincronizados automaticamente.',
+        'helper_mobile' => 'Os campos ficam sincronizados; escolha prefixo ou máscara, como preferir.',
         'submit' => 'Calcular',
     ],
     'results' => [
