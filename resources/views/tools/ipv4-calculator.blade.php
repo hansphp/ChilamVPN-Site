@@ -68,34 +68,27 @@
     <main>
       <section
         id="ipv4-calculator"
-        class="tool-section"
+        class="tool-section tool-section--center"
         data-ipv4-root
         data-invalid-ip="{{ __('ipv4.results.error_invalid_ip') }}"
         data-invalid-mask="{{ __('ipv4.results.error_invalid_mask') }}"
         data-locale="{{ str_replace('_', '-', app()->getLocale()) }}"
       >
-        <div class="tool-headings">
+        <div class="tool-headings tool-headings--center">
           <h2 class="section-title section-title--light">{{ __('ipv4.form.heading') }}</h2>
           <p class="section-text section-text--muted">{{ __('ipv4.form.hint') }}</p>
         </div>
-        <div class="calculator-layout">
-          <article class="calc-card calc-card--form">
-            <div class="calc-card__header">
-              <div class="calc-card__icon" aria-hidden="true">
-                <span>IPv4</span>
-              </div>
-              <div>
-                <p class="calc-card__eyebrow">{{ __('ipv4.hero.tagline') }}</p>
-                <h3 class="calc-card__title">{{ __('ipv4.hero.title') }}</h3>
-              </div>
-            </div>
+        <div class="calculator-stack">
+          <article class="calc-panel calc-panel--form">
+            <h3 class="calc-panel__title">{{ __('ipv4.hero.title') }}</h3>
+            <p class="calc-panel__subtitle">{{ __('ipv4.hero.tagline') }}</p>
             <form data-calculator novalidate>
-              <div class="input-grid">
+              <div class="input-grid input-grid--single">
                 <label class="input-field">
                   <span>{{ __('ipv4.form.ip_label') }}</span>
                   <input id="ip-address" class="form-control form-control-lg fancy-input" type="text" inputmode="decimal" autocomplete="off" value="192.168.0.1" data-ip-input />
                 </label>
-                <label class="input-field input-field--compact">
+                <label class="input-field">
                   <span>{{ __('ipv4.form.cidr_label') }}</span>
                   <input id="cidr-prefix" class="form-control form-control-lg fancy-input" type="number" min="0" max="32" value="24" data-cidr-input />
                 </label>
@@ -104,33 +97,19 @@
                   <input id="netmask" class="form-control form-control-lg fancy-input" type="text" inputmode="decimal" placeholder="255.255.255.0" data-netmask-input />
                 </label>
               </div>
-              <div class="input-actions">
+              <div class="input-actions input-actions--center">
                 <div class="live-indicator">
                   <span class="live-indicator__dot" aria-hidden="true"></span>
                   <span>{{ __('ipv4.form.live_indicator') }}</span>
                 </div>
                 <p>{{ __('ipv4.form.helper_mobile') }}</p>
               </div>
-              <p class="form-status" data-status role="alert"></p>
+              <div class="form-status alert alert-danger text-center" data-status role="alert" hidden></div>
             </form>
           </article>
 
-          <article class="calc-card calc-card--results" data-results>
-            <h3>{{ __('ipv4.results.heading') }}</h3>
-            <div class="calc-summary">
-              <div class="calc-summary__item">
-                <span>{{ __('ipv4.results.network_address') }}</span>
-                <strong data-field="network">-</strong>
-              </div>
-              <div class="calc-summary__item">
-                <span>{{ __('ipv4.results.broadcast_address') }}</span>
-                <strong data-field="broadcast">-</strong>
-              </div>
-              <div class="calc-summary__item">
-                <span>{{ __('ipv4.results.usable_hosts') }}</span>
-                <strong data-field="usableHosts">-</strong>
-              </div>
-            </div>
+          <article class="calc-panel calc-panel--results" data-results>
+            <h3 class="calc-panel__title">{{ __('ipv4.results.heading') }}</h3>
             @php
               $resultMap = [
                   'networkBits' => __('ipv4.results.network_bits'),
@@ -146,11 +125,11 @@
                   'subnetCount' => __('ipv4.results.subnet_count'),
               ];
             @endphp
-            <div class="calc-results">
+            <div class="calc-results calc-results--center">
               @foreach($resultMap as $key => $label)
                 <div class="calc-results__item">
                   <span class="result-label">{{ $label }}</span>
-                  <span class="result-value" data-field="{{ $key }}">-</span>
+                  <span class="result-value result-value--accent" data-field="{{ $key }}">-</span>
                 </div>
               @endforeach
             </div>
