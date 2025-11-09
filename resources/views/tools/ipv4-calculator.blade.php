@@ -60,77 +60,61 @@
     </header>
 
     <main>
-      <section id="ipv4-calculator" class="ip-insights">
-        <h2 class="section-title section-title--light">{{ __('ipv4.form.heading') }}</h2>
-        <div class="ip-insights__grid">
-          <article class="ip-card ip-card--primary">
+      <section id="ipv4-calculator" class="tool-section">
+        <div class="tool-headings">
+          <h2 class="section-title section-title--light">{{ __('ipv4.form.heading') }}</h2>
+          <p class="section-text section-text--muted">{{ __('ipv4.form.hint') }}</p>
+        </div>
+        <div class="calculator-layout">
+          <article class="calc-card calc-card--form">
             <form data-calculator novalidate>
-              <div class="form-control">
-                <label for="ip-address">{{ __('ipv4.form.ip_label') }}</label>
-                <input id="ip-address" type="text" inputmode="decimal" autocomplete="off" value="192.168.0.1" data-ip-input />
+              <div class="input-grid">
+                <label class="input-field">
+                  <span>{{ __('ipv4.form.ip_label') }}</span>
+                  <input id="ip-address" type="text" inputmode="decimal" autocomplete="off" value="192.168.0.1" data-ip-input />
+                </label>
+                <label class="input-field input-field--compact">
+                  <span>{{ __('ipv4.form.cidr_label') }}</span>
+                  <input id="cidr-prefix" type="number" min="0" max="32" value="24" data-cidr-input />
+                </label>
+                <label class="input-field">
+                  <span>{{ __('ipv4.form.netmask_label') }}</span>
+                  <input id="netmask" type="text" inputmode="decimal" placeholder="255.255.255.0" data-netmask-input />
+                </label>
               </div>
-              <div class="form-control form-control--inline">
-                <label for="cidr-prefix">{{ __('ipv4.form.cidr_label') }}</label>
-                <input id="cidr-prefix" type="number" min="0" max="32" value="24" data-cidr-input />
+              <div class="input-actions">
+                <p>{{ __('ipv4.form.hint') }}</p>
+                <button type="submit" class="button button--primary">{{ __('ipv4.form.submit') }}</button>
               </div>
-              <div class="form-control">
-                <label for="netmask">{{ __('ipv4.form.netmask_label') }}</label>
-                <input id="netmask" type="text" inputmode="decimal" placeholder="255.255.255.0" data-netmask-input />
-              </div>
-              <p class="form-hint">{{ __('ipv4.form.hint') }}</p>
-              <button type="submit" class="cta-button">{{ __('ipv4.form.submit') }}</button>
               <p class="form-status" data-status role="alert"></p>
             </form>
           </article>
 
-          <article class="ip-card" data-results>
+          <article class="calc-card calc-card--results" data-results>
             <h3>{{ __('ipv4.results.heading') }}</h3>
-            <dl class="result-list">
-              <div>
-                <dt>{{ __('ipv4.results.network_bits') }}</dt>
-                <dd data-field="networkBits">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.host_bits') }}</dt>
-                <dd data-field="hostBits">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.network_address') }}</dt>
-                <dd data-field="network">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.broadcast_address') }}</dt>
-                <dd data-field="broadcast">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.cidr_netmask') }}</dt>
-                <dd data-field="netmask">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.wildcard_mask') }}</dt>
-                <dd data-field="wildcard">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.total_hosts') }}</dt>
-                <dd data-field="totalHosts">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.usable_hosts') }}</dt>
-                <dd data-field="usableHosts">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.first_host') }}</dt>
-                <dd data-field="firstHost">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.last_host') }}</dt>
-                <dd data-field="lastHost">-</dd>
-              </div>
-              <div>
-                <dt>{{ __('ipv4.results.subnet_count') }}</dt>
-                <dd data-field="subnetCount">-</dd>
-              </div>
-            </dl>
+            @php
+              $resultMap = [
+                  'networkBits' => __('ipv4.results.network_bits'),
+                  'hostBits' => __('ipv4.results.host_bits'),
+                  'network' => __('ipv4.results.network_address'),
+                  'broadcast' => __('ipv4.results.broadcast_address'),
+                  'netmask' => __('ipv4.results.cidr_netmask'),
+                  'wildcard' => __('ipv4.results.wildcard_mask'),
+                  'totalHosts' => __('ipv4.results.total_hosts'),
+                  'usableHosts' => __('ipv4.results.usable_hosts'),
+                  'firstHost' => __('ipv4.results.first_host'),
+                  'lastHost' => __('ipv4.results.last_host'),
+                  'subnetCount' => __('ipv4.results.subnet_count'),
+              ];
+            @endphp
+            <div class="calc-results">
+              @foreach($resultMap as $key => $label)
+                <div class="calc-results__item">
+                  <span class="result-label">{{ $label }}</span>
+                  <span class="result-value" data-field="{{ $key }}">-</span>
+                </div>
+              @endforeach
+            </div>
           </article>
         </div>
       </section>
