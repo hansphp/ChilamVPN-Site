@@ -46,7 +46,7 @@ class HomeController extends Controller
                 'toolLinks' => $toolLinks,
             ])
             ->header('Content-Language', $locale)
-            ->header('Content-Security-Policy', "default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; base-uri 'self'; frame-ancestors 'none';");
+            ->header('Content-Security-Policy', static::CONTENT_SECURITY_POLICY);
     }
 
     private function buildAlternates(string $activeLocale): array
