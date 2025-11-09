@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "title": "ChilamVPN – Zelfbedieningsplatform voor cloud-VPN",
+    "description": "Verbind je systemen en business units veilig via ons self-service cloud VPN."
+  },
+  "nav": {
+    "tools": "Tools",
+    "tools_items": [
+      { "label": "Wat is mijn publieke IP?", "target": "ip-tool" },
+      { "label": "IPv4 subnetcalculator", "target": "ipv4-calculator" }
+    ],
+    "login": "Inloggen",
+    "login_href": "https://portal.chilamvpn.com/login?lang=nl-NL",
+    "cta": "Start nu",
+    "cta_href": "#benefits"
+  },
+  "hero": {
+    "brand": "ChilamVPN",
+    "tagline": "Verbind je systemen veilig via onze cloud-VPN die je zelf kunt beheren.",
+    "cta": "Start nu",
+    "cta_href": "#benefits"
+  },
+  "sections": {
+    "benefits": {
+      "title": "Voordelen",
+      "items": [
+        {
+          "title": "Eenvoudig self‑service",
+          "body": "Registreer gebruikers en apparaten in minuten via een intuïtieve webinterface. Download kant-en-klare configuraties en verbind zonder IT-support."
+        },
+        {
+          "title": "Sterke beveiliging",
+          "body": "Gebouwd op moderne VPN-technologie met actuele cryptografie en optimale prestaties voor versleutelde verbindingen."
+        },
+        {
+          "title": "Geen extra hardware",
+          "body": "Verbind met je systemen zonder fysieke firewalls of publieke IP-adressen. Alles wordt automatisch in de cloud uitgerold."
+        },
+        {
+          "title": "Schaalbaar en flexibel",
+          "body": "Voeg apparaten en gebruikers toe, breid verbindingen uit naar meerdere regio’s en beheer toegang vanuit één dashboard."
+        }
+      ]
+    },
+    "how": {
+      "title": "Zo werkt het",
+      "steps": [
+        {
+          "title": "Vraag je account aan",
+          "body": "Log veilig in op het platform. Elke gebruiker krijgt een persoonlijk dashboard met unieke sleutels."
+        },
+        {
+          "title": "Download de configuratie",
+          "body": "Genereer automatisch je VPN-configuratie en een QR-code om deze op je apparaten te importeren."
+        },
+        {
+          "title": "Verbind je teams",
+          "body": "Activeer de verbinding en koppel systemen en locaties via ons beveiligde netwerk."
+        }
+      ]
+    },
+    "legal": {
+      "title": "Verantwoord gebruik",
+      "body": "ChilamVPN is ontworpen voor het veilig verbinden van bedrijfsnetwerken en systemen. We bieden geen VPN voor anoniem surfen of het omzeilen van geografische blokkades; betrouwbaarheid en compliance staan voorop."
+    }
+  },
+  "footer": {
+    "notice": "© 2025 ChilamVPN. Alle rechten voorbehouden.",
+    "contact": {
+      "label": "Contact:",
+      "email": "contact@chilamvpn.com"
+    },
+    "links": [
+      { "label": "Gebruiksvoorwaarden", "href": "#" },
+      { "label": "Privacybeleid", "href": "#" }
+    ]
+  },
+  "ui": {
+    "language_switcher_title": "Andere taal nodig?",
+    "language_switcher_hint": "Kies een taal om deze pagina te bekijken.",
+    "copy_cta": "IP kopiëren"
+  }
+}

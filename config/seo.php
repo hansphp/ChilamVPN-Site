@@ -7,6 +7,7 @@ return [
         'en' => null,
         'pt-BR' => null,
         'fr-FR' => null,
+        'nl-NL' => null,
     ],
     'tools' => [
         'ip-tool' => [
@@ -15,6 +16,7 @@ return [
             'en' => 'what-is-my-ip',
             'pt-BR' => 'qual-e-meu-ip',
             'fr-FR' => 'quelle-est-mon-ip',
+            'nl-NL' => 'wat-is-mijn-ip',
         ],
         'ipv4-calculator' => [
             'es' => 'calculadora-ipv4',
@@ -22,6 +24,7 @@ return [
             'en' => 'ipv4-calculator',
             'pt-BR' => 'calculadora-ipv4',
             'fr-FR' => 'calculatrice-ipv4',
+            'nl-NL' => 'ipv4-calculator',
         ],
     ],
 ];

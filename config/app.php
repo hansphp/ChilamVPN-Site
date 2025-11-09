@@ -129,6 +129,7 @@ return [
         'en',
         'pt-BR',
         'fr-FR',
+        'nl-NL',
     ],
 
 ];

@@ -24,5 +24,9 @@ return [
             'label' => 'Français (France)',
             'aliases' => ['fr-fr', 'fr'],
         ],
+        'nl-NL' => [
+            'label' => 'Nederlands',
+            'aliases' => ['nl', 'nl-nl'],
+        ],
     ],
 ];
