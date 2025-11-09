@@ -74,6 +74,10 @@
         data-invalid-mask="{{ __('ipv4.results.error_invalid_mask') }}"
         data-locale="{{ str_replace('_', '-', app()->getLocale()) }}"
       >
+        <div class="tool-headings tool-headings--center">
+          <h2 class="section-title section-title--light">{{ __('ipv4.form.heading') }}</h2>
+          <p class="section-text section-text--muted">{{ __('ipv4.form.hint') }}</p>
+        </div>
         <div class="calculator-stack">
           <article class="calc-card calc-card--form calc-card--center">
             <h3 class="calc-card__title text-center">{{ __('ipv4.hero.title') }}</h3>
