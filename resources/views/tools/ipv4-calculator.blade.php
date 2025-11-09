@@ -92,8 +92,11 @@
                 </label>
               </div>
               <div class="input-actions">
+                <div class="live-indicator">
+                  <span class="live-indicator__dot" aria-hidden="true"></span>
+                  <span>{{ __('ipv4.form.live_indicator') }}</span>
+                </div>
                 <p>{{ __('ipv4.form.helper_mobile') }}</p>
-                <button type="submit" class="button button--primary">{{ __('ipv4.form.submit') }}</button>
               </div>
               <p class="form-status" data-status role="alert"></p>
             </form>
@@ -323,7 +326,21 @@
           status.hidden = !message;
         };
 
+        const setFieldValidity = (input, isValid) => {
+          if (!input) {
+            return;
+          }
+
+          input.classList.toggle('is-invalid', !isValid);
+        };
+
         const formatNumber = (value) => numberFormat.format(value);
+
+        const resetResults = () => {
+          resultFields.forEach((field) => {
+            field.textContent = '-';
+          });
+        };
 
         const hydrateResults = (payload) => {
           const mapping = {
@@ -351,21 +368,30 @@
           const ipInt = ipToInt(ipValue);
 
           if (ipInt === null) {
+            setFieldValidity(ipInput, false);
             setStatus(messages.invalidIp);
+            resetResults();
             return;
           }
+          setFieldValidity(ipInput, true);
 
           let prefix = Number.parseInt(cidrInput.value, 10);
           if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) {
+            setFieldValidity(cidrInput, false);
             setStatus(messages.invalidMask);
+            resetResults();
             return;
           }
+          setFieldValidity(cidrInput, true);
 
           const netmaskValue = prefixToMask(prefix);
           if (!netmaskValue) {
+            setFieldValidity(netmaskInput, false);
             setStatus(messages.invalidMask);
+            resetResults();
             return;
           }
+          setFieldValidity(netmaskInput, true);
 
           if (netmaskInput.value.trim() !== netmaskValue) {
             netmaskInput.value = netmaskValue;
@@ -404,12 +430,29 @@
           setStatus('');
         };
 
+        let debounceTimer;
+        const scheduleCalculation = () => {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(calculate, 120);
+        };
+
         cidrInput.addEventListener('input', () => {
           const prefix = Number.parseInt(cidrInput.value, 10);
           const mask = prefixToMask(prefix);
           if (mask) {
             netmaskInput.value = mask;
           }
+          scheduleCalculation();
+        });
+
+        ipInput.addEventListener('input', scheduleCalculation);
+
+        netmaskInput.addEventListener('input', () => {
+          const prefix = maskToPrefix(netmaskInput.value.trim());
+          if (prefix !== null) {
+            cidrInput.value = prefix;
+          }
+          scheduleCalculation();
         });
 
         netmaskInput.addEventListener('blur', () => {
@@ -417,11 +460,7 @@
           if (prefix !== null) {
             cidrInput.value = prefix;
           }
-        });
-
-        calculator.addEventListener('submit', (event) => {
-          event.preventDefault();
-          calculate();
+          scheduleCalculation();
         });
 
         calculate();

@@ -15,6 +15,7 @@ return [
         'netmask_label' => 'Máscara (opcional)',
         'hint' => 'Puedes escribir el prefijo (por ejemplo /24) o la máscara punteada. El formulario sincroniza ambos valores automáticamente.',
         'helper_mobile' => 'Prefijo y máscara se sincronizan solos; usa el campo que prefieras.',
+        'live_indicator' => 'Calcula automáticamente mientras escribes',
         'submit' => 'Calcular',
     ],
     'results' => [

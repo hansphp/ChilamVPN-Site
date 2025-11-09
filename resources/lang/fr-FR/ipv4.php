@@ -15,6 +15,7 @@ return [
         'netmask_label' => 'Masque (optionnel)',
         'hint' => 'Indiquez soit le préfixe (/24, /29…), soit le masque pointé. Les deux champs restent synchronisés.',
         'helper_mobile' => 'Préfixe et masque restent synchronisés : complétez simplement le champ qui vous convient.',
+        'live_indicator' => 'Calcule automatiquement pendant la saisie',
         'submit' => 'Calculer',
     ],
     'results' => [
