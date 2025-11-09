@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ data_get($meta, 'title', __('ip.title')) }}</title>
     <meta name="description" content="{{ data_get($meta, 'description', __('ip.desc')) }}" />
+    <link rel="canonical" href="{{ url()->current() }}" />
     <link rel="stylesheet" href="{{ asset('styles.css') }}" />
     @foreach($alternates as $alternate)
       <link rel="alternate" hreflang="{{ $alternate['hreflang'] }}" href="{{ $alternate['url'] }}">

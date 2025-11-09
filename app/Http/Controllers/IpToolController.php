@@ -62,7 +62,7 @@ class IpToolController extends Controller
 
     private function guardSlug(string $locale, string $slug): void
     {
-        $expected = Arr::get(config('seo.tools.ip'), $locale);
+        $expected = Arr::get(config('seo.tools.ip-tool'), $locale);
 
         if ($expected !== $slug) {
             throw new NotFoundHttpException();
@@ -71,7 +71,7 @@ class IpToolController extends Controller
 
     private function buildAlternates(string $activeLocale): array
     {
-        $slugs = Arr::get(config('seo.tools'), 'ip', []);
+        $slugs = Arr::get(config('seo.tools'), 'ip-tool', []);
 
         return collect($slugs)->map(function (string $slug, string $locale) use ($activeLocale) {
             return [
@@ -91,7 +91,7 @@ class IpToolController extends Controller
     private function buildLocaleOptions(string $activeLocale): array
     {
         $supported = config('locales.supported', []);
-        $slugs = Arr::get(config('seo.tools'), 'ip', []);
+        $slugs = Arr::get(config('seo.tools'), 'ip-tool', []);
 
         return collect($supported)
             ->map(function (array $meta, string $locale) use ($activeLocale, $slugs) {
@@ -110,15 +110,14 @@ class IpToolController extends Controller
 
     private function buildToolLinks(string $locale, array $items): array
     {
-        $ipSlug = Arr::get(config('seo.tools'), 'ip', []);
-        $ipSlug = $ipSlug[$locale] ?? null;
+        $toolSlugs = config('seo.tools', []);
 
-        return collect($items)->map(function (array $item) use ($locale, $ipSlug) {
+        return collect($items)->map(function (array $item) use ($locale, $toolSlugs) {
             $target = Arr::get($item, 'target');
             $href = Arr::get($item, 'href');
 
-            if ($target === 'ip-tool' && $ipSlug) {
-                $href = URL::to(sprintf('%s/%s', $locale, $ipSlug));
+            if ($target && isset($toolSlugs[$target][$locale])) {
+                $href = URL::to(sprintf('%s/%s', $locale, $toolSlugs[$target][$locale]));
             }
 
             return [

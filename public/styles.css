@@ -586,6 +586,78 @@ footer a {
   margin-top: 0.5rem;
 }
 
+.ip-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-control label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+
+.form-control input {
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(12, 18, 34, 0.15);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control input:focus {
+  outline: 2px solid var(--brand-mid);
+  border-color: transparent;
+  box-shadow: 0 0 0 4px rgba(28, 140, 94, 0.15);
+}
+
+.form-control--inline input {
+  max-width: 120px;
+}
+
+.form-hint {
+  font-size: 0.85rem;
+  color: var(--text-subtle);
+}
+
+.form-status {
+  min-height: 1.25rem;
+  font-size: 0.9rem;
+  color: #c62828;
+}
+
+.result-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+
+.result-list div {
+  background: rgba(12, 18, 34, 0.03);
+  padding: 0.75rem;
+  border-radius: 12px;
+}
+
+.result-list dt {
+  font-size: 0.85rem;
+  color: var(--text-subtle);
+  margin-bottom: 0.25rem;
+}
+
+.result-list dd {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 960px) {
   .top-nav {

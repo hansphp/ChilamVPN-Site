@@ -66,4 +66,34 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://chilamvpn.com/es/calculadora-ipv4</loc>
+    <lastmod>2025-01-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://chilamvpn.com/es-LA/calculadora-ipv4</loc>
+    <lastmod>2025-01-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://chilamvpn.com/en/ipv4-calculator</loc>
+    <lastmod>2025-01-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://chilamvpn.com/pt-BR/calculadora-ipv4</loc>
+    <lastmod>2025-01-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://chilamvpn.com/fr-FR/calculatrice-ipv4</loc>
+    <lastmod>2025-01-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
 </urlset>

@@ -3,41 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Services\LocalizedContent;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\URL;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class HomeController extends Controller
+class Ipv4CalculatorController extends Controller
 {
     public function __construct(private readonly LocalizedContent $content)
     {
     }
 
-    public function landing(): RedirectResponse
+    public function show(string $locale, string $slug)
     {
-        $defaultLocale = config('locales.default', 'es-LA');
-        $slug = $this->homeSlug($defaultLocale);
+        $this->guardSlug($locale, $slug);
 
-        $path = $slug ? sprintf('%s/%s', $defaultLocale, $slug) : $defaultLocale;
-
-        return redirect('/' . ltrim($path, '/'));
-    }
-
-    public function show(string $locale)
-    {
         $pageContent = $this->content->home($locale);
-
         $alternates = $this->buildAlternates($locale);
         $locales = $this->buildLocaleOptions($locale);
         $toolLinks = $this->buildToolLinks($locale, data_get($pageContent, 'nav.tools_items', []));
 
         $meta = [
-            'title' => data_get($pageContent, 'meta.title') ?? data_get($pageContent, 'hero.brand', 'ChilamVPN'),
-            'description' => data_get($pageContent, 'meta.description'),
+            'title' => __('ipv4.title'),
+            'description' => __('ipv4.desc'),
         ];
 
         return response()
-            ->view('home.index', [
+            ->view('tools.ipv4-calculator', [
                 'locale' => $locale,
                 'content' => $pageContent,
                 'meta' => $meta,
@@ -49,23 +40,30 @@ class HomeController extends Controller
             ->header('Content-Security-Policy', "default-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; base-uri 'self'; frame-ancestors 'none';");
     }
 
+    private function guardSlug(string $locale, string $slug): void
+    {
+        $expected = Arr::get(config('seo.tools.ipv4-calculator'), $locale);
+
+        if ($expected !== $slug) {
+            throw new NotFoundHttpException();
+        }
+    }
+
     private function buildAlternates(string $activeLocale): array
     {
-        $slugs = config('seo.home', []);
+        $slugs = Arr::get(config('seo.tools'), 'ipv4-calculator', []);
 
-        return collect($slugs)->map(function ($slug, string $locale) use ($activeLocale) {
-            $path = $slug ? sprintf('%s/%s', $locale, $slug) : $locale;
-
+        return collect($slugs)->map(function (string $slug, string $locale) use ($activeLocale) {
             return [
                 'locale' => $locale,
                 'hreflang' => str_replace('_', '-', $locale),
-                'url' => URL::to($path),
+                'url' => URL::to(sprintf('%s/%s', $locale, $slug)),
                 'active' => $locale === $activeLocale,
             ];
         })->push([
             'locale' => 'x-default',
             'hreflang' => 'x-default',
-            'url' => URL::to($this->homeSlugPath('en')),
+            'url' => URL::to(sprintf('en/%s', $slugs['en'] ?? 'ipv4-calculator')),
             'active' => false,
         ])->all();
     }
@@ -73,14 +71,17 @@ class HomeController extends Controller
     private function buildLocaleOptions(string $activeLocale): array
     {
         $supported = config('locales.supported', []);
+        $slugs = Arr::get(config('seo.tools'), 'ipv4-calculator', []);
 
         return collect($supported)
-            ->map(function (array $meta, string $locale) use ($activeLocale) {
+            ->map(function (array $meta, string $locale) use ($activeLocale, $slugs) {
+                $slug = $slugs[$locale] ?? null;
+
                 return [
                     'code' => $locale,
                     'label' => Arr::get($meta, 'label', $locale),
                     'active' => $locale === $activeLocale,
-                    'url' => URL::to($this->homeSlugPath($locale)),
+                    'url' => $slug ? URL::to(sprintf('%s/%s', $locale, $slug)) : URL::to($locale),
                 ];
             })
             ->values()
@@ -104,19 +105,5 @@ class HomeController extends Controller
                 'href' => $href ?? '#',
             ];
         })->all();
-    }
-
-    private function homeSlug(string $locale): ?string
-    {
-        $slugs = config('seo.home', []);
-
-        return $slugs[$locale] ?? null;
-    }
-
-    private function homeSlugPath(string $locale): string
-    {
-        $slug = $this->homeSlug($locale);
-
-        return $slug ? sprintf('%s/%s', $locale, $slug) : $locale;
     }
 }

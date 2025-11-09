@@ -6,7 +6,8 @@
   "nav": {
     "tools": "Ferramentas",
     "tools_items": [
-      { "label": "Qual é o meu IP público?", "target": "ip-tool" }
+      { "label": "Qual é o meu IP público?", "target": "ip-tool" },
+      { "label": "Calculadora de sub-redes IPv4", "target": "ipv4-calculator" }
     ],
     "login": "Entrar",
     "login_href": "https://portal.chilamvpn.com/login?lang=pt-BR",
