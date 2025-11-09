@@ -695,6 +695,7 @@ footer a {
   display: flex;
   gap: 1rem;
   width: 100%;
+  flex-wrap: nowrap;
 }
 
 .input-field--grow {
@@ -736,16 +737,8 @@ footer a {
 
 .input-field--compact .fancy-input {
   max-width: 140px;
-}
-
-@media (max-width: 640px) {
-  .input-row {
-    flex-direction: column;
-  }
-
-  .input-field--compact .fancy-input {
-    max-width: 100%;
-  }
+  min-width: 110px;
+  text-align: center;
 }
 
 .input-actions {
