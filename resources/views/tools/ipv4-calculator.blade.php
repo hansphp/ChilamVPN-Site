@@ -79,9 +79,9 @@
           <p class="section-text section-text--muted">{{ __('ipv4.form.hint') }}</p>
         </div>
         <div class="calculator-stack">
-          <article class="calc-panel calc-panel--form">
-            <h3 class="calc-panel__title">{{ __('ipv4.hero.title') }}</h3>
-            <p class="calc-panel__subtitle">{{ __('ipv4.hero.tagline') }}</p>
+          <article class="calc-card calc-card--form calc-card--center">
+            <h3 class="calc-card__title text-center">{{ __('ipv4.hero.title') }}</h3>
+            <p class="calc-card__subtitle text-center">{{ __('ipv4.hero.tagline') }}</p>
             <form data-calculator novalidate>
               <div class="input-grid input-grid--single">
                 <div class="input-row">
@@ -110,8 +110,8 @@
             </form>
           </article>
 
-          <article class="calc-panel calc-panel--results" data-results>
-            <h3 class="calc-panel__title">{{ __('ipv4.results.heading') }}</h3>
+          <article class="calc-card calc-card--results calc-card--center" data-results>
+            <h3 class="calc-panel__title text-center">{{ __('ipv4.results.heading') }}</h3>
             @php
               $resultMap = [
                   'networkBits' => __('ipv4.results.network_bits'),
