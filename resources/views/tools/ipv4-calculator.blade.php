@@ -84,14 +84,16 @@
             <p class="calc-panel__subtitle">{{ __('ipv4.hero.tagline') }}</p>
             <form data-calculator novalidate>
               <div class="input-grid input-grid--single">
-                <label class="input-field">
-                  <span>{{ __('ipv4.form.ip_label') }}</span>
-                  <input id="ip-address" class="form-control form-control-lg fancy-input" type="text" inputmode="decimal" autocomplete="off" value="192.168.0.1" data-ip-input />
-                </label>
-                <label class="input-field">
-                  <span>{{ __('ipv4.form.cidr_label') }}</span>
-                  <input id="cidr-prefix" class="form-control form-control-lg fancy-input" type="number" min="0" max="32" value="24" data-cidr-input />
-                </label>
+                <div class="input-row">
+                  <label class="input-field input-field--grow">
+                    <span>{{ __('ipv4.form.ip_label') }}</span>
+                    <input id="ip-address" class="form-control form-control-lg fancy-input" type="text" inputmode="decimal" autocomplete="off" value="192.168.0.1" data-ip-input />
+                  </label>
+                  <label class="input-field input-field--compact">
+                    <span>{{ __('ipv4.form.cidr_label') }}</span>
+                    <input id="cidr-prefix" class="form-control form-control-lg fancy-input" type="number" min="0" max="32" value="24" data-cidr-input />
+                  </label>
+                </div>
                 <label class="input-field">
                   <span>{{ __('ipv4.form.netmask_label') }}</span>
                   <input id="netmask" class="form-control form-control-lg fancy-input" type="text" inputmode="decimal" placeholder="255.255.255.0" data-netmask-input />
