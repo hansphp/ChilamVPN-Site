@@ -696,7 +696,7 @@ footer a {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.input-field input {
+.input-field .fancy-input {
   border: none;
   border-bottom: 2px solid rgba(255, 255, 255, 0.25);
   background: transparent;
@@ -704,24 +704,27 @@ footer a {
   color: #fff;
   font-size: 1.05rem;
   font-weight: 600;
+  border-radius: 0;
+  box-shadow: 0 8px 24px rgba(12, 18, 34, 0.35);
 }
 
-.input-field input::placeholder {
+.input-field .fancy-input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.input-field input.is-invalid {
+.input-field .fancy-input.is-invalid {
   border-color: #ff6b6b;
   color: #ffdede;
   box-shadow: 0 4px 18px rgba(255, 107, 107, 0.35);
 }
 
-.input-field input:focus {
+.input-field .fancy-input:focus {
   outline: none;
   border-color: #ffb347;
+  box-shadow: 0 10px 28px rgba(255, 179, 71, 0.35);
 }
 
-.input-field--compact {
+.input-field--compact .fancy-input {
   max-width: 140px;
 }
 

@@ -6,6 +6,12 @@
     <title>{{ data_get($meta, 'title', __('ipv4.hero.title')) }}</title>
     <meta name="description" content="{{ data_get($meta, 'description', __('ipv4.desc')) }}" />
     <link rel="canonical" href="{{ url()->current() }}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="{{ asset('styles.css') }}" />
     @foreach($alternates as $alternate)
       <link rel="alternate" hreflang="{{ $alternate['hreflang'] }}" href="{{ $alternate['url'] }}">
@@ -60,7 +66,14 @@
     </header>
 
     <main>
-      <section id="ipv4-calculator" class="tool-section">
+      <section
+        id="ipv4-calculator"
+        class="tool-section"
+        data-ipv4-root
+        data-invalid-ip="{{ __('ipv4.results.error_invalid_ip') }}"
+        data-invalid-mask="{{ __('ipv4.results.error_invalid_mask') }}"
+        data-locale="{{ str_replace('_', '-', app()->getLocale()) }}"
+      >
         <div class="tool-headings">
           <h2 class="section-title section-title--light">{{ __('ipv4.form.heading') }}</h2>
           <p class="section-text section-text--muted">{{ __('ipv4.form.hint') }}</p>
@@ -80,15 +93,15 @@
               <div class="input-grid">
                 <label class="input-field">
                   <span>{{ __('ipv4.form.ip_label') }}</span>
-                  <input id="ip-address" type="text" inputmode="decimal" autocomplete="off" value="192.168.0.1" data-ip-input />
+                  <input id="ip-address" class="form-control form-control-lg fancy-input" type="text" inputmode="decimal" autocomplete="off" value="192.168.0.1" data-ip-input />
                 </label>
                 <label class="input-field input-field--compact">
                   <span>{{ __('ipv4.form.cidr_label') }}</span>
-                  <input id="cidr-prefix" type="number" min="0" max="32" value="24" data-cidr-input />
+                  <input id="cidr-prefix" class="form-control form-control-lg fancy-input" type="number" min="0" max="32" value="24" data-cidr-input />
                 </label>
                 <label class="input-field">
                   <span>{{ __('ipv4.form.netmask_label') }}</span>
-                  <input id="netmask" type="text" inputmode="decimal" placeholder="255.255.255.0" data-netmask-input />
+                  <input id="netmask" class="form-control form-control-lg fancy-input" type="text" inputmode="decimal" placeholder="255.255.255.0" data-netmask-input />
                 </label>
               </div>
               <div class="input-actions">
@@ -251,220 +264,8 @@
           });
         }
 
-        const calculator = document.querySelector('[data-calculator]');
-        if (!calculator) {
-          return;
-        }
-
-        const ipInput = calculator.querySelector('[data-ip-input]');
-        const cidrInput = calculator.querySelector('[data-cidr-input]');
-        const netmaskInput = calculator.querySelector('[data-netmask-input]');
-        const status = calculator.querySelector('[data-status]');
-        const resultFields = document.querySelectorAll('[data-field]');
-        const numberFormat = new Intl.NumberFormat(document.documentElement.lang || 'en');
-        const messages = {
-          invalidIp: '{{ __('ipv4.results.error_invalid_ip') }}',
-          invalidMask: '{{ __('ipv4.results.error_invalid_mask') }}',
-        };
-
-        const padBinary = (value) => value.toString(2).padStart(8, '0');
-
-        const ipToInt = (value) => {
-          const parts = value.split('.').map((chunk) => Number(chunk.trim()));
-          if (parts.length !== 4 || parts.some((part) => Number.isNaN(part) || part < 0 || part > 255)) {
-            return null;
-          }
-
-          return parts.reduce((acc, part) => acc * 256 + part, 0);
-        };
-
-        const intToIp = (value) => {
-          const normalized = value >>> 0;
-          return [
-            (normalized >>> 24) & 255,
-            (normalized >>> 16) & 255,
-            (normalized >>> 8) & 255,
-            normalized & 255,
-          ].join('.');
-        };
-
-        const prefixToMask = (prefix) => {
-          if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) {
-            return null;
-          }
-
-          const mask = prefix === 0 ? 0 : (0xffffffff << (32 - prefix)) >>> 0;
-          return intToIp(mask);
-        };
-
-        const maskToPrefix = (mask) => {
-          const maskInt = ipToInt(mask);
-          if (maskInt === null) {
-            return null;
-          }
-
-          const binary = padBinary((maskInt >>> 24) & 255) + padBinary((maskInt >>> 16) & 255) + padBinary((maskInt >>> 8) & 255) + padBinary(maskInt & 255);
-          if (!/^1*0*$/.test(binary)) {
-            return null;
-          }
-
-          return binary.replace(/0+/g, '').length;
-        };
-
-        const wildcardFromMask = (mask) => {
-          const maskInt = ipToInt(mask);
-          if (maskInt === null) {
-            return null;
-          }
-
-          const wildcard = (~maskInt) >>> 0;
-          return intToIp(wildcard);
-        };
-
-        const setStatus = (message = '') => {
-          status.textContent = message;
-          status.hidden = !message;
-        };
-
-        const setFieldValidity = (input, isValid) => {
-          if (!input) {
-            return;
-          }
-
-          input.classList.toggle('is-invalid', !isValid);
-        };
-
-        const formatNumber = (value) => numberFormat.format(value);
-
-        const resetResults = () => {
-          resultFields.forEach((field) => {
-            field.textContent = '-';
-          });
-        };
-
-        const hydrateResults = (payload) => {
-          const mapping = {
-            networkBits: payload.networkBits,
-            hostBits: payload.hostBits,
-            network: payload.network,
-            broadcast: payload.broadcast,
-            netmask: payload.netmask,
-            wildcard: payload.wildcard,
-            totalHosts: formatNumber(payload.totalHosts),
-            usableHosts: formatNumber(payload.usableHosts),
-            firstHost: payload.firstHost,
-            lastHost: payload.lastHost,
-            subnetCount: formatNumber(payload.subnetCount),
-          };
-
-          resultFields.forEach((field) => {
-            const key = field.dataset.field;
-            field.textContent = mapping[key] ?? '-';
-          });
-        };
-
-        const calculate = () => {
-          const ipValue = ipInput.value.trim();
-          const ipInt = ipToInt(ipValue);
-
-          if (ipInt === null) {
-            setFieldValidity(ipInput, false);
-            setStatus(messages.invalidIp);
-            resetResults();
-            return;
-          }
-          setFieldValidity(ipInput, true);
-
-          let prefix = Number.parseInt(cidrInput.value, 10);
-          if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) {
-            setFieldValidity(cidrInput, false);
-            setStatus(messages.invalidMask);
-            resetResults();
-            return;
-          }
-          setFieldValidity(cidrInput, true);
-
-          const netmaskValue = prefixToMask(prefix);
-          if (!netmaskValue) {
-            setFieldValidity(netmaskInput, false);
-            setStatus(messages.invalidMask);
-            resetResults();
-            return;
-          }
-          setFieldValidity(netmaskInput, true);
-
-          if (netmaskInput.value.trim() !== netmaskValue) {
-            netmaskInput.value = netmaskValue;
-          }
-
-          const wildcard = wildcardFromMask(netmaskValue);
-          const hostBits = 32 - prefix;
-          const network = (ipInt & ipToInt(netmaskValue)) >>> 0;
-          const broadcast = (network | ipToInt(wildcard ?? '0.0.0.0')) >>> 0;
-          const totalHosts = hostBits === 0 ? 1 : 2 ** hostBits;
-          let usableHosts;
-          if (prefix === 31) {
-            usableHosts = 2;
-          } else if (prefix === 32) {
-            usableHosts = 1;
-          } else {
-            usableHosts = Math.max(totalHosts - 2, 0);
-          }
-          const firstHost = prefix >= 31 ? network : network + 1;
-          const lastHost = prefix >= 31 ? broadcast : broadcast - 1;
-          const subnetCount = prefix === 0 ? 1 : 2 ** prefix;
-
-          hydrateResults({
-            networkBits: prefix,
-            hostBits,
-            network: intToIp(network),
-            broadcast: intToIp(broadcast),
-            netmask: netmaskValue,
-            wildcard: wildcard ?? '0.0.0.0',
-            totalHosts,
-            usableHosts,
-            firstHost: intToIp(firstHost >>> 0),
-            lastHost: intToIp(lastHost >>> 0),
-            subnetCount,
-          });
-          setStatus('');
-        };
-
-        let debounceTimer;
-        const scheduleCalculation = () => {
-          clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(calculate, 120);
-        };
-
-        cidrInput.addEventListener('input', () => {
-          const prefix = Number.parseInt(cidrInput.value, 10);
-          const mask = prefixToMask(prefix);
-          if (mask) {
-            netmaskInput.value = mask;
-          }
-          scheduleCalculation();
-        });
-
-        ipInput.addEventListener('input', scheduleCalculation);
-
-        netmaskInput.addEventListener('input', () => {
-          const prefix = maskToPrefix(netmaskInput.value.trim());
-          if (prefix !== null) {
-            cidrInput.value = prefix;
-          }
-          scheduleCalculation();
-        });
-
-        netmaskInput.addEventListener('blur', () => {
-          const prefix = maskToPrefix(netmaskInput.value.trim());
-          if (prefix !== null) {
-            cidrInput.value = prefix;
-          }
-          scheduleCalculation();
-        });
-
-        calculate();
       })();
     </script>
+    <script type="module" src="{{ asset('js/ipv4-calculator.js') }}"></script>
   </body>
 </html>
