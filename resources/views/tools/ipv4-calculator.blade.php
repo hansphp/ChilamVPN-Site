@@ -80,8 +80,6 @@
         </div>
         <div class="calculator-stack">
           <article class="calc-card calc-card--form calc-card--center">
-            <h3 class="calc-card__title text-center">{{ __('ipv4.hero.title') }}</h3>
-            <p class="calc-card__subtitle text-center">{{ __('ipv4.hero.tagline') }}</p>
             <form data-calculator novalidate>
               <div class="input-grid input-grid--single">
                 <div class="input-row">
