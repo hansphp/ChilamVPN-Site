@@ -9,7 +9,7 @@
       { "label": "Quelle est mon IP publique ?", "target": "ip-tool" }
     ],
     "login": "Se connecter",
-    "login_href": "https://portal.chilamvpn.com/?lang=fr-FR",
+    "login_href": "https://portal.chilamvpn.com/login?lang=fr-FR",
     "cta": "Commencer maintenant",
     "cta_href": "#benefits"
   },
